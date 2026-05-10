@@ -8,15 +8,15 @@ const config = {
   experimental: {
     turbo: {
       resolveAlias: {
-        '@/*': './src/*',
-        'fumadocs-mdx:collections/*': './.source/*',
+        '@': './src',
+        'fumadocs-mdx:collections': './.source',
       },
     },
   },
   turbopack: {
     resolveAlias: {
-      '@/*': './src/*',
-      'fumadocs-mdx:collections/*': './.source/*',
+      '@': './src',
+      'fumadocs-mdx:collections': './.source',
     },
   },
   async rewrites() {
