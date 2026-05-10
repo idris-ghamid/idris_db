@@ -7,7 +7,7 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx && cp -r .source generated"
   },
   "dependencies": {
     "next": "^15.1.0",
