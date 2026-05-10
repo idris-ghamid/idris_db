@@ -13,6 +13,10 @@ const config = {
   async rewrites() {
     return [
       {
+        source: '/',
+        destination: '/en',
+      },
+      {
         source: '/:lang/docs/:path*.mdx',
         destination: '/:lang/llms.mdx/:path*',
       },
