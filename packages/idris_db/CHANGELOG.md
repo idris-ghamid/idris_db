@@ -1,4 +1,24 @@
-﻿## v1.2.6-dev.2
+## 1.0.3
+
+🎉 **The IDRISIUM Transformation — idris DB v1.0.3** 🎉
+
+This version marks the official evolution of the library into **idris DB** under the IDRISIUM Corp umbrella.
+
+### ✨ New & Improved
+- **Official Brand Reveal**: Renamed to **idris DB** with a new premium visual identity.
+- **Enhanced Documentation**: Launched a comprehensive documentation site at [idris-db-docs.vercel.app](https://idris-db-docs.vercel.app/).
+- **Absolute Build Stability**: Fixed persistent module resolution issues in the documentation build using the IDRISIUM `src/` architecture and relative path migration.
+- **Optimized Assets**: Optimized all image assets and benchmarks for better display on GitHub and pub.dev.
+- **Arabic Language Support**: Added foundational support for Arabic error messages and documentation.
+
+### 🛠️ Technical Fixes
+- Migrated documentation project to standard `src/` directory structure.
+- Resolved Turbopack alias resolution bugs for sub-directory environments.
+- Corrected image paths in README files for cross-platform compatibility.
+
+---
+
+## v1.2.6-dev.2
 
 <!-- Release notes generated using configuration in .github/release.yml at v1.2.6-dev.2 -->
 
