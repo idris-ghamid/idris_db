@@ -1,6 +1,6 @@
-## 1.0.3
+## 1.0.4
 
-🎉 **The IDRISIUM Transformation — idris DB v1.0.3** 🎉
+🎉 **The IDRISIUM Transformation — idris DB v1.0.4** 🎉
 
 This version marks the official evolution of the library into **idris DB** under the IDRISIUM Corp umbrella.
 
@@ -473,7 +473,7 @@ This version marks the official evolution of the library into **idris DB** under
 **Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.8...1.0.9
 
 
-## 1.0.3
+## 1.0.4
 
 
 ### Updated

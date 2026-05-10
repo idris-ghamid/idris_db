@@ -87,10 +87,10 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  idris_db: ^1.0.3
+  idris_db: ^1.0.4
 
 dev_dependencies:
-  idris_db_generator: ^1.0.3
+  idris_db_generator: ^1.0.4
   build_runner: ^2.4.0
 ```
 

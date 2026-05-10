@@ -544,7 +544,7 @@
 * fix: standardize plugin naming across all platforms for idris_db_flutter_libs by @ahmtydn in https://github.com/ahmtydn/idris_db/pull/2
 
 
-**Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.3...1.0.4
+**Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.4...1.0.4
 
 ## 1.0.2
 
