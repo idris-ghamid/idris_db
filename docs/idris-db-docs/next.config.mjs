@@ -10,14 +10,6 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@source': path.resolve(__dirname, './generated'),
-    };
-    config.resolve.preferRelative = true;
-    return config;
-  },
 };
 
 export default withMDX(config);
