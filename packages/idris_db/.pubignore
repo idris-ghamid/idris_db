@@ -1,0 +1,64 @@
+# Pub ignore file for idris_db package
+# Files and directories to exclude from pub.dev publishing
+
+# Development files
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# Build artifacts
+build/
+.dart_tool/
+*.g.dart.bak
+
+# Test files (keep test/ but ignore coverage)
+coverage/
+.test_coverage/
+
+# Documentation build artifacts
+doc/api/
+
+# Git files
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD files
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Scripts and tools
+tool/
+scripts/
+*.sh
+*.ps1
+*.py
+
+# Temporary markdown files
+TODO.md
+NOTES.md
+DEVELOPMENT.md
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini

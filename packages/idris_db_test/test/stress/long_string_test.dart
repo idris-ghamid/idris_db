@@ -1,0 +1,84 @@
+﻿import 'dart:math';
+
+import 'package:idris_db/idris_db.dart';
+import 'package:idris_db_test/idris_db_test.dart';
+import 'package:test/test.dart';
+
+part 'long_string_test.g.dart';
+
+@collection
+class StringModel {
+  StringModel({required this.id, this.string, this.stringList});
+
+  int id;
+
+  String? string;
+
+  List<String>? stringList;
+
+  @override
+  // ignore: hash_and_equals
+  bool operator ==(Object other) =>
+      other is StringModel &&
+      string == other.string &&
+      listEquals(stringList, other.stringList);
+}
+
+String _randomStr(int length) {
+  final rand = Random();
+  final runes = <int>[];
+  for (var i = 0; i < length; i++) {
+    runes.add(0x10000 + rand.nextInt(0x10000));
+  }
+  return String.fromCharCodes(runes);
+}
+
+void main() {
+  group('Long String', () {
+    late IdrisDb IdrisDb;
+
+    setUp(() async {
+      IdrisDb = await openTempIDRISDB([StringModelSchema]);
+    });
+
+    IdrisDbTest('Single', () {
+      final models = <StringModel>[
+        for (var i = 0; i < 100; i++)
+          StringModel(
+            id: i,
+            string: '${_randomStr(50000)}test$i${_randomStr(50000)}',
+          ),
+      ];
+      IdrisDb.write((IdrisDb) {
+        IdrisDb.stringModels.putAll(models);
+      });
+
+      expect(IdrisDb.stringModels.where().findAll(), models);
+
+      expect(IdrisDb.stringModels.where().stringContains('test75').findAll(), [
+        models[75],
+      ]);
+      expect(IdrisDb.stringModels.where().stringMatches('*test66*').findAll(), [
+        models[66],
+      ]);
+    });
+
+    IdrisDbTest('List', () {
+      final models = <StringModel>[
+        for (var i = 0; i < 10; i++)
+          StringModel(
+            id: i,
+            stringList: [
+              for (var j = 0; j < 100; j++)
+                '${_randomStr(10000)}test${i}_$j${_randomStr(10000)}',
+            ],
+          ),
+      ];
+      IdrisDb.write((IdrisDb) {
+        IdrisDb.stringModels.putAll(models);
+      });
+
+      expect(IdrisDb.stringModels.where().findAll(), models);
+    });
+  });
+}

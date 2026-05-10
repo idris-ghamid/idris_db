@@ -1,0 +1,32 @@
+﻿name: idris_db_flutter_libs
+description: IdrisDb Core binaries for the IdrisDb Database. Needs to be included for Flutter apps.
+version: 1.0.0
+repository: https://github.com/idris-ghamid/idris_db
+homepage: https://github.com/idris-ghamid/idris_db
+
+environment:
+  sdk: ">=3.1.0 <4.0.0"
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  idris_db: ^1.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: dev.idrisium.idris_db_flutter_libs
+        pluginClass: IdrisDbFlutterLibsPlugin
+      ios:
+        pluginClass: IdrisDbFlutterLibsPlugin
+        sharedDarwinSource: true
+      macos:
+        pluginClass: IdrisDbFlutterLibsPlugin
+        sharedDarwinSource: true
+      linux:
+        pluginClass: IdrisDbFlutterLibsPlugin
+      windows:
+        pluginClass: IdrisDbFlutterLibsPlugin
+      web:

@@ -1,0 +1,41 @@
+﻿name: IdrisDbCoreBindings
+output: "lib/src/native/bindings.dart"
+headers:
+  entry-points:
+    - "IdrisDb-dart.h"
+  include-directives:
+    - "**IdrisDb-dart.h"
+compiler-opts:
+  - "-Wno-nullability-completeness"
+
+structs:
+  dependency-only: opaque
+  include:
+    - CIDRISDBInstance
+    - CIDRISDBTxn
+    - CIDRISDBInsert
+    - CIDRISDBWriter
+    - CIDRISDBReader
+    - CIDRISDBQueryBuilder
+    - CIDRISDBQuery
+    - CIDRISDBCursor
+    - IDRISDBValue
+    - Filter
+  rename:
+    "^(?!C)(.*)": "C$1"
+
+unions:
+  dependency-only: opaque
+  include:
+    - "IdrisDb*"
+
+preamble: |
+  // ignore_for_file: camel_case_types, non_constant_identifier_names
+
+functions:
+  leaf:
+    include:
+      - "IDRISDB_filter.*"
+      - "IDRISDB_read.*"
+      - "IDRISDB_value.*"
+      - "IDRISDB_write.*"

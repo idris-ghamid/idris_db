@@ -1,0 +1,206 @@
+﻿import 'dart:async';
+import 'dart:js_interop';
+
+import 'package:idris_db/idris_db.dart';
+import 'package:idris_db/src/web/interop.dart';
+import 'package:web/web.dart' as web;
+
+export 'bindings.dart';
+export 'ffi.dart';
+export 'interop.dart';
+
+@JS('wasm_bindgen')
+external JSPromise? _wasmBindgenInit([JSAny? pathOrModule]);
+
+@JS('window.wasm_bindgen')
+external JSAny? get _windowWasmBindgen;
+
+bool _scriptLoaded = false;
+
+/// Initializes the IdrisDb WebAssembly bindings.
+FutureOr<IdrisDbCoreBindings> initializePlatformBindings([String? library]) async {
+  final url =
+      library ?? 'https://unpkg.com/idris_db@${IdrisDb.version}/IdrisDb.wasm';
+
+  // Ensure the wasm-bindgen JavaScript glue code is loaded
+  if (!_scriptLoaded) {
+    // Check if wasm_bindgen is already available
+    final wasmBindgenExists = _windowWasmBindgen;
+    if (wasmBindgenExists == null) {
+      // Not loaded yet, load it dynamically
+      await _loadWasmBindgenScript(url);
+    }
+    _scriptLoaded = true;
+  }
+
+  // Call the wasm_bindgen init function directly
+  final result = await _wasmBindgenInit(url.toJS)!.toDart;
+
+  // The result should have the memory and exports we need
+  return result! as JSIDRISDB;
+}
+
+/// Loads the wasm-bindgen JavaScript glue code
+Future<void> _loadWasmBindgenScript(String wasmUrl) async {
+  final completer = Completer<void>();
+
+  // Derive the JS file URL from the WASM URL
+  final jsUrl = wasmUrl.replaceAll('.wasm', '.js');
+
+  // Create and inject the script tag
+  final script = web.document.createElement('script') as web.HTMLScriptElement
+    ..src = jsUrl
+    ..type = 'text/javascript'
+    ..onload = (web.Event event) {
+      // Schedule async work without making the callback async
+      unawaited(_verifyWasmBindgenLoaded(jsUrl, completer));
+    }.toJS
+    ..onerror = (web.Event event) {
+      completer.completeError(
+        Exception(
+          'Failed to load IdrisDb.js from $jsUrl. '
+          'Make sure both IdrisDb.wasm and IdrisDb.js are '
+          'available at the same location. '
+          'For local usage, copy both files to your web/ directory.',
+        ),
+      );
+    }.toJS;
+
+  web.document.head!.appendChild(script);
+
+  await completer.future;
+}
+
+/// Verifies that wasm_bindgen is loaded and available
+Future<void> _verifyWasmBindgenLoaded(
+  String jsUrl,
+  Completer<void> completer,
+) async {
+  // Wait a bit for the script to execute and set the global variable
+  await Future<void>.delayed(const Duration(milliseconds: 50));
+
+  // Verify wasm_bindgen is now available
+  var attempts = 0;
+  while (attempts < 10) {
+    final wasmBindgenExists = _windowWasmBindgen;
+    if (wasmBindgenExists != null) {
+      completer.complete();
+      return;
+    }
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    attempts++;
+  }
+
+  completer.completeError(
+    Exception(
+      'wasm_bindgen not available after loading $jsUrl. '
+      'This usually means IdrisDb.js failed to execute properly. '
+      'Check the browser console for more details.',
+    ),
+  );
+}
+
+/// Type alias for IdrisDb core bindings on the web platform.
+typedef IdrisDbCoreBindings = JSIDRISDB;
+
+/// Annotation for methods that should be inlined by dart2js compiler.
+const tryInline = pragma('dart2js:tryInline');
+
+/// A receive port implementation for web platform.
+///
+/// This is a stub implementation that throws [UnimplementedError] for web,
+/// as isolates are not fully supported in web environments.
+class ReceivePort extends Stream<dynamic> {
+  /// The send port associated with this receive port.
+  final sendPort = SendPort();
+
+  @override
+  StreamSubscription<void> listen(
+    void Function(dynamic event)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
+  }) {
+    throw UnimplementedError();
+  }
+
+  /// Closes this receive port.
+  ///
+  /// Throws [UnimplementedError] on web platform.
+  void close() {
+    throw UnimplementedError();
+  }
+}
+
+/// A send port implementation for web platform.
+///
+/// This is a stub implementation that throws [UnimplementedError] for web,
+/// as isolates are not fully supported in web environments.
+class SendPort {
+  /// Returns the native port handle.
+  ///
+  /// Always returns 0 on web platform.
+  int get nativePort => 0;
+
+  /// Sends a message through this send port.
+  ///
+  /// Throws [UnimplementedError] on web platform.
+  void send(dynamic message) {
+    throw UnimplementedError();
+  }
+}
+
+/// Computes a fast hash for the given string using FNV-1a algorithm variant.
+///
+/// This is optimized for web platform and provides consistent hash values
+/// for string inputs. The algorithm uses multiple accumulators to compute
+/// a 64-bit hash value.
+///
+/// Returns a 64-bit integer hash of the input string.
+int platformFastHash(String str) {
+  var i = 0;
+  var t0 = 0;
+  var v0 = 0x2325;
+  var t1 = 0;
+  var v1 = 0x8422;
+  var t2 = 0;
+  var v2 = 0x9ce4;
+  var t3 = 0;
+  var v3 = 0xcbf2;
+
+  while (i < str.length) {
+    v0 ^= str.codeUnitAt(i++);
+    t0 = v0 * 435;
+    t1 = v1 * 435;
+    t2 = v2 * 435;
+    t3 = v3 * 435;
+    t2 += v0 << 8;
+    t3 += v1 << 8;
+    t1 += t0 >>> 16;
+    v0 = t0 & 65535;
+    t2 += t1 >>> 16;
+    v1 = t1 & 65535;
+    v3 = (t3 + (t2 >>> 16)) & 65535;
+    v2 = t2 & 65535;
+  }
+
+  return (v3 & 15) * 281474976710656 +
+      v2 * 4294967296 +
+      v1 * 65536 +
+      (v0 ^ (v3 >> 4));
+}
+
+/// Runs a computation in an isolate-like manner on web platform.
+///
+/// On web, this simply executes the [computation] directly in the current
+/// context since true isolates are not available. The [debugName] parameter
+/// is provided for compatibility but is not used on web.
+///
+/// Returns the result of the [computation].
+@tryInline
+Future<T> runIsolate<T>(
+  String debugName,
+  FutureOr<T> Function() computation,
+) async {
+  return computation();
+}

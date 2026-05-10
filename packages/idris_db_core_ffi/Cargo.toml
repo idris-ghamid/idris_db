@@ -1,0 +1,20 @@
+﻿[package]
+name = "IdrisDb"
+version = "0.0.0"
+authors = ["Simon Choi"]
+edition = "2021"
+
+[dependencies]
+IdrisDb-core = { path = "../idris_db_core", default-features = false }
+serde = "1.0"
+serde_json = "1.0"
+
+[lib]
+crate-type=["staticlib", "cdylib"]
+
+[features]
+default = ["sqlite", "native"]
+native = ["IdrisDb-core/native"]
+sqlite = ["IdrisDb-core/sqlite"]
+sqlcipher = ["sqlite", "IdrisDb-core/sqlcipher"]
+sqlcipher-vendored = ["sqlcipher", "IdrisDb-core/sqlcipher-vendored"]

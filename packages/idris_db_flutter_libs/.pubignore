@@ -1,0 +1,27 @@
+# Pub ignore file for idris_db_flutter_libs package
+
+# Development files
+*.log
+*.tmp
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Build artifacts (keep native binaries)
+.dart_tool/
+
+# Git files
+.git/
+.gitignore
+
+# Scripts
+*.sh
+*.ps1
+*.py
+
+# Backup files
+*.bak
+*~

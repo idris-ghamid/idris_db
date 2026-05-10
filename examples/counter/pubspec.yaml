@@ -1,0 +1,21 @@
+﻿name: counter
+publish_to: "none"
+
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  idris_db: ^1.2.6-dev.2
+  idris_db_flutter_libs: ^1.2.6-dev.2
+  path_provider: ^2.1.5
+
+dev_dependencies:
+  build_runner: ^2.10.2
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

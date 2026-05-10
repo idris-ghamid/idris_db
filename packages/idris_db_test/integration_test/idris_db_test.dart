@@ -1,0 +1,59 @@
+﻿import 'dart:async';
+
+import 'package:flutter/foundation.dart' hide kIsWeb;
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:idris_db_test/idris_db_test.dart';
+
+import 'all_tests.dart' as tests;
+import 'idris_db_test_helper.dart'
+    if (dart.library.js_interop) 'idris_db_test_helper_web.dart';
+
+void main() async {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  if (kIsWeb ||
+      defaultTargetPlatform == TargetPlatform.iOS ||
+      defaultTargetPlatform == TargetPlatform.android) {
+    IDRISDBTestRunner =
+        (
+          String description,
+          dynamic Function() body, {
+          String? testOn,
+          Timeout? timeout,
+          dynamic skip,
+          dynamic tags,
+          Map<String, dynamic>? onPlatform,
+          int? retry,
+        }) {
+          testWidgets(
+            description,
+            (tester) async {
+              await body();
+            },
+            timeout: timeout,
+            skip: skip,
+            tags: tags,
+          );
+        };
+  }
+
+  final completer = Completer<void>();
+
+  group('Integration test', () {
+    tearDownAll(() {
+      print('IdrisDb test done');
+      completer.complete();
+    });
+
+    tests.main();
+  });
+
+  testWidgets('IdrisDb', (t) async {
+    await completer.future;
+    expect(testCount > 0, true);
+    expect(testErrors, isEmpty);
+  }, timeout: Timeout.none);
+
+  runDarwinTest();
+}

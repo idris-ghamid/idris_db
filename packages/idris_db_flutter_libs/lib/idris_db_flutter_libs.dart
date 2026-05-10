@@ -1,0 +1,1 @@
+library idris_db_flutter_libs;

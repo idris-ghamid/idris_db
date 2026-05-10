@@ -1,0 +1,12 @@
+﻿{
+  "name": "idris_db",
+  "version": "0.0.0-placeholder",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmtydn/idris_db.git"
+  },
+  "files": [
+    "IdrisDb.wasm",
+    "IdrisDb.js"
+  ]
+}

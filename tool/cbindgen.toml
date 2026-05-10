@@ -1,0 +1,8 @@
+﻿language = "C"
+
+[parse]
+parse_deps = true
+include = ["IdrisDb-core", "IdrisDb"]
+
+[parse.expand]
+crates = ["IdrisDb"]

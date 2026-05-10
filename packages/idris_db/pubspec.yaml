@@ -1,0 +1,38 @@
+﻿name: idris_db
+description: High-performance NoSQL database for Flutter with exclusive developer tools - Enhanced error messages, smart logging, query analyzer, and Arabic support. Built by IDRISIUM Corp.
+version: 1.0.0
+repository: https://github.com/idris-ghamid/idris_db
+homepage: https://github.com/idris-ghamid/idris_db
+issue_tracker: https://github.com/idris-ghamid/idris_db/issues
+documentation: https://github.com/idris-ghamid/idris_db#readme
+funding:
+  - https://github.com/sponsors/idris-ghamid
+topics:
+  - database
+  - idris-db
+  - nosql
+  - flutter
+  - storage
+  - idrisium
+  - performance
+  - offline-first
+
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+
+dependencies:
+  analyzer: ">=6.0.0 <10.0.0"
+  build: ">=2.0.0 <5.0.0"
+  ffi: ^2.1.4
+  json_annotation: ^4.9.0
+  logger: ^2.6.2
+  meta: ^1.16.0
+  source_gen: ">=1.2.0 <5.0.0"
+  web: ^1.1.0
+
+dev_dependencies:
+  build_test: ^3.5.1
+  ffigen: ^20.1.1
+  flutter_lints: ^6.0.0
+  test: ^1.25.0
+  very_good_analysis: ^10.1.0

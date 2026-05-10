@@ -1,0 +1,493 @@
+---
+title: Isar v3'ten Geçiş
+description: Isar 3.x'ten Isar Plus v4'e geçiş için eksiksiz rehber
+icon: ArrowRightLeft
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Steps } from "fumadocs-ui/components/steps";
+
+# Isar v3'ten Isar Plus v4'e Geçiş
+
+Eski `isar` 3.x paketlerinden `idris_db` (v4) sürümüne yükseltmek **kırıcı ve dosya formatını** değiştiren bir işlemdir. v4 çekirdeği farklı metadata yazar ve v3 tarafından yazılan bir veritabanını açamaz, bu yüzden şu hatayı görürsünüz:
+
+```
+VersionError: The database version is not compatible with this version of Isar.
+```
+
+Çözüm; eski verilerinizi legacy çalışma zamanı ile dışa aktarıp taze bir Isar Plus veritabanına içe aktarmaktır. Aşağıdaki adımlar bu süreci anlatır.
+
+## Geçiş Özeti
+
+<Steps>
+### Legacy Yapıyı Koru
+
+Legacy dosyaları okuyabilmek için `isar:^3.1.0+1` bağımlılığına sahip bir build yayınlayın (veya elinizde tutun).
+
+### Isar Plus'ı Ekle
+
+Geçiş sırasında legacy paketlerin yanına `idris_db` ve `idris_db_flutter_libs` ekleyin.
+
+### Şemaları Yeniden Üret
+
+Kod üreticisini yeniden çalıştırarak şemalarınızı v4 API'lerine karşı derlenebilir hale getirin.
+
+### Verileri Kopyala
+
+Her kaydı v3 örneğinden yepyeni bir Isar Plus örneğine aktarın.
+
+### Temizlik Yap
+
+Kopyalama başarıyla tamamlandığında legacy dosyaları silin ve eski bağımlılıkları kaldırın.
+
+</Steps>
+
+<Callout type="info" title="Temiz Başlangıç">
+  Eski verilere ihtiyacınız **yoksa**, v3 dizinini silip yeni bir veritabanıyla
+  başlayabilirsiniz. Bu rehberin geri kalanı mevcut kayıtları korumaya
+  odaklanır.
+</Callout>
+
+## Bağımlılıkları Yan Yana Güncelleyin
+
+Kopya bitene kadar eski çalışma zamanını tutun, ardından yenisini ekleyin:
+
+```yaml title="pubspec.yaml"
+dependencies:
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  isar_generator: ^3.1.0+1
+  idris_db: { versions.idris_db }
+  idris_db_flutter_libs: { versions.idris_db }
+
+dev_dependencies:
+  build_runner: ^2.4.10
+```
+
+İki paket aynı Dart sembollerini dışa vurur, bu yüzden geçiş süresince her zaman alias kullanarak içe aktarın:
+
+```dart title="imports.dart"
+import 'package:isar/isar.dart' as legacy;
+import 'package:idris_db/idris_db.dart' as plus;
+```
+
+## Şemalarınızı v4 İçin Yeniden Üretin
+
+Isar Plus, üreticisini ana paketle birlikte getirir. Yeni yardımcılar ve adapter'ların üretilebilmesi için builder'ı tekrar çalıştırın:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Burada durup derleme hatalarını giderin (örneğin, `Id?` alanlarının non-null `int id` olması gerekir ve otomatik üretilen ID'ler için `collection.autoIncrement()` kullanın).
+
+### API Geçiş Rehberi Temel Değişiklikler
+
+<Tabs items={["İşlemler", "ID'ler", "Enumlar", "Linkler"]}>
+<Tab value="İşlemler">
+**Eski (v3):**
+```dart
+await isar.writeTxn(() async {
+  await isar.users.put(user);
+});
+```
+
+**Yeni (v4):**
+
+```dart
+await isar.writeAsync((isar) async {
+  await isar.users.put(user);
+});
+```
+
+</Tab>
+
+<Tab value="ID'ler">
+**Eski (v3):**
+```dart
+@collection
+class User {
+  Id id = Isar.autoIncrement; // ❌ v3'te geçerliydi
+  String? name;
+}
+```
+
+**Yeni (v4):**
+
+```dart
+@collection
+class User {
+  User(this.id);
+
+  final int id; // ✅ Non-nullable, siz yönetirsiniz
+  String? name;
+}
+```
+
+<Callout type="error" title="Önemli Değişiklik: Isar.autoIncrement Kaldırıldı">
+`Isar.autoIncrement` **sabiti artık v4'te mevcut değil**. Artık class tanımında doğrudan atayamazsınız.
+
+Bunun yerine, **nesneleri oluştururken** `collection.autoIncrement()` metodunu çağırın:
+
+```dart
+// ✅ v4: Oluştururken auto-increment ID al
+isar.write((isar) {
+  final user = User(isar.users.autoIncrement())
+    ..name = 'John';
+  isar.users.put(user);
+});
+```
+
+ID alanı artık: non-nullable olmalı (`int`, `Id?` değil), constructor ile geçilmeli ve class tanımında değil oluşturma sırasında üretilmeli.
+
+</Callout>
+</Tab>
+
+<Tab value="Enumlar">
+**Eski (v3):**
+```dart
+@enumerated
+enum Status { active, inactive }
+```
+
+**Yeni (v4) - Ordinal (Varsayılan):**
+
+```dart
+// Annotation gerekmiyor - varsayılan olarak index kullanır
+enum Status { active, inactive }
+```
+
+**Yeni (v4) - Özel Değerler:**
+
+```dart
+enum Status {
+  active(1),
+  inactive(2);
+
+  const Status(this.code);
+
+  @enumValue
+  final int code;
+}
+```
+
+<Callout type="info">
+  `@enumerated` ve `@Enumerated(EnumType.ordinal/name)` annotation'ları v4'te kaldırıldı.
+  Ordinal depolama için: annotation olmadan düz enum kullanın.
+  Özel değerler için: enum içine `@enumValue` annotation'lı bir alan ekleyin.
+</Callout>
+</Tab>
+
+<Tab value="Linkler">
+**Eski (v3):**
+```dart
+final posts = IsarLinks<Post>();
+```
+
+**Yeni (v4):**
+
+```dart
+// Bunun yerine gömülü nesneler kullanın
+List<Post> posts = [];
+```
+
+</Tab>
+</Tabs>
+
+### Benzersiz İndeksler
+
+<Callout type="warning" title="`replace` parametresi kaldırıldı">
+  v3'te `@Index(unique: true, replace: true)` ve `putBy...` yardımcıları duplicate
+  kayıtları otomatik olarak değiştiriyordu. Isar Plus v4'te **her benzersiz indeks
+  varsayılan olarak overwrite eder** ve bu davranışı kapatmanın yerleşik bir yolu
+  yoktur. Duplicate girişleri reddetmek için `put` çağrısından önce manuel kontrol
+  ekleyin:
+
+```dart
+await isar.writeAsync((isar) async {
+  final clash = await isar.users
+      .where()
+      .emailEqualTo(user.email)
+      .findFirst();
+  if (clash != null) {
+    throw StateError('email zaten kayıtlı');
+  }
+
+  await isar.users.put(user);
+});
+```
+
+Kod tabanınızda `putBy*` çağrıları varsa, bunları bu örnekteki gibi manuel
+kontrollerle veya koleksiyon düzeyinde `filter`/`where` sorgularıyla değiştirin.
+
+</Callout>
+
+### Linklerle İlgili Ayrıntılar
+
+Projeniz yoğun şekilde `IsarLink`, `IsarLinks` veya `@Backlink` kullanıyorsa, **verileri kopyalamadan önce** bu ilişkileri yeni modele taşıyın. v4 çekirdeği yalnızca sıradan Dart alanlarını (skalerler, gömülü nesneler, `List<T>`) bilir; dolayısıyla her link ya gömülü bir nesneye ya da sizin yöneteceğiniz açık bir foreign-key ID'sine dönüşmelidir. Şu adımları izleyin:
+
+#### 1. Tüm legacy linkleri envanterleyin
+
+- Modellerinizde `IsarLink`, `IsarLinks` ve `@Backlink` için arama yapın.
+- Her ilişki için kardinaliteyi (bire bir, bire çok, çoktan çoka) not alın.
+- İlgili verinin daima ebeveynle birlikte taşınıp taşınmadığına karar verin. Her zaman birlikteyse embed edin, değilse ID tutun.
+
+#### 2. Şemayı v4 terimleriyle yeniden yazın
+
+- **Embed edin:** Her zaman ebeveynle gelen küçük listeler için alanı `List<EmbeddedTip>` veya nullable gömülü tipe çevirin.
+- **ID saklayın:** Büyük koleksiyonlar veya bağımsız yaşam döngüsü gereken ilişkiler için `int authorId`, `List<int> followerIds>` gibi alanlar ekleyin ve sorgularla yükleyin.
+- Backlink'leri açık referanslara çevirin; `@Backlink(to: 'posts')` yerine `int authorId` alanı ekleyin.
+
+```dart title="Legacy / v4 (packages/idris_db_test/lib/src/twitter örneğinden)"
+// v3
+@collection
+class LegacyTweet {
+  LegacyTweet({this.id});
+
+  Id? id;
+  late IsarLink<LegacyUser> author;
+  late IsarLinks<LegacyUser> likedBy;
+}
+
+// v4
+@collection
+class Tweet {
+  Tweet(this.id, this.authorId, {this.reactions = const []});
+
+  final int id;
+  final int authorId; // eski author linki
+  final List<TweetReaction> reactions; // likedBy linklerinin yerini alır
+}
+
+@embedded
+class TweetReaction {
+  TweetReaction({required this.userId, required this.createdAt});
+
+  final int userId;
+  final DateTime createdAt;
+}
+```
+
+Daha fazla örnek ve canlı referans için [ilişkiler rehberine](../relationships) göz atın.
+
+#### 3. Mevcut veriyi dönüştürün
+
+Kopyalama sırasında her linki elle materyalize edin ve yeni yapıya map'leyin:
+
+```dart title="Linkleri gömülü nesnelere taşıyın"
+Future<void> _copyTweets(
+  legacy.Isar legacyDb,
+  plus.Isar plusDb,
+) async {
+  final tweets = await legacyDb.legacyTweets.where().findAll();
+
+  await plusDb.writeAsync((isar) async {
+    for (final legacyTweet in tweets) {
+      final authorId = legacyTweet.author.value?.id;
+      if (authorId == null) {
+        continue; // veya farklı bir strateji seçin
+      }
+
+      final reactions = legacyTweet.likedBy.map((user) {
+        return TweetReaction(
+          userId: user.id!,
+          createdAt: DateTime.now(), // metadata saklıyorsanız burada kullanın
+        );
+      }).toList();
+
+      await isar.tweets.put(
+        Tweet(
+          legacyTweet.id ?? isar.tweets.autoIncrement(),
+          authorId,
+          reactions: reactions,
+        ),
+      );
+    }
+  });
+}
+```
+
+v3'te iki `IsarLinks` ile tuttuğunuz çoktan çoka ilişkiler için, her iki ID'yi bir arada saklayan açık bir join koleksiyonu oluşturun. Migrasyon sırasında link çiftlerini okuyup bu koleksiyona kendiniz ekleyin. Backlink yerine ise filtreli sorgular kullanın: `user.posts` yerine `isar.posts.where().authorIdEqualTo(user.id)` gibi.
+
+Tüm linkler veri olarak ifade edildiğinde Isar Plus'a geçiş sıradan insert'lerden ibarettir ve projeden bütün `IsarLink` API'lerini kaldırabilirsiniz.
+
+## Verilerin Kendini Kopyalayın
+
+Geçici bir geçiş rutini oluşturun (örneğin uygulamanızı başlatmadan önce `main()` içinde veya ayrı bir `bin/migrate.dart` dosyasında). Şablon şu şekildedir:
+
+1. Legacy store'u v3 çalışma zamanı ile açın
+2. Farklı bir dizinde veya farklı bir adla yeni bir v4 örneği açın
+3. Her koleksiyonu sayfalayarak yeni şemaya eşleyin ve yeni veritabanına `put` edin
+4. İşlemin iki kez çalışmaması için geçişi tamamlandı olarak işaretleyin
+
+```dart title="migration.dart"
+Future<void> migrateLegacyDb(String directoryPath) async {
+  final legacyDb = await legacy.Isar.open(
+    [LegacyUserSchema, LegacyTodoSchema],
+    directory: directoryPath,
+    inspector: false,
+    name: 'legacy',
+  );
+
+  final plusDb = plus.Isar.open(
+    schemas: [UserSchema, TodoSchema],
+    directory: directoryPath,
+    name: 'app_v4',
+    engine: plus.IsarEngine.sqlite, // native için IsarEngine.isar
+    inspector: false,
+  );
+
+  await _copyUsers(legacyDb, plusDb);
+  await _copyTodos(legacyDb, plusDb);
+
+  await legacyDb.close();
+  await plusDb.close();
+}
+
+Future<void> _copyUsers(legacy.Isar legacyDb, plus.Isar plusDb) async {
+  const pageSize = 200;
+  final total = await legacyDb.legacyUsers.count();
+
+  for (var offset = 0; offset < total; offset += pageSize) {
+    final batch = await legacyDb.legacyUsers
+      .where()
+      .offset(offset)
+      .limit(pageSize)
+      .findAll();
+
+    await plusDb.writeAsync((isar) async {
+      await isar.users.putAll(
+        batch.map((user) => User(
+          id: user.id ?? isar.users.autoIncrement(),
+          email: user.email,
+          status: _mapStatus(user.status),
+        )),
+      );
+    });
+  }
+}
+```
+
+<Callout type="info" title="Eşleme Yardımcıları">
+  Enum yeniden adlandırmaları, alan kaldırmaları veya veri temizliği gibi
+  işlemleri tek bir yerde ele alabilmek için eşleme metotlarını (`_mapStatus`
+  gibi) geçiş rutininin yanında tutun.
+</Callout>
+
+Çok büyük koleksiyonlarınız varsa UI'yi bloklamamak için döngüyü bir izolede veya arka plan servisinde çalıştırın. Aynı desen gömülü nesneler ve linkler için de geçerlidir—legacy sorgu API'siyle yükleyin ve yeni şema ile kaydedin.
+
+## Yalnızca Bir Kez Çalıştığından Emin Olun
+
+Her iki çalışma zamanını aynı anda göndermek, her soğuk başlangıcın tekrar geçiş denemesi yapmasına yol açabilir. Rutini bir bayrakla sınırlandırın; böylece her kurulumda sadece bir kez çalışır:
+
+```dart title="migration_tracker.dart"
+class MigrationTracker {
+  static const key = 'isarPlusMigration';
+
+  static Future<bool> needsMigration() async {
+    final prefs = await SharedPreferences.getInstance();
+    return !prefs.getBool(key).toString().contains('true');
+  }
+
+  static Future<void> markDone() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key, true);
+  }
+}
+
+Future<void> bootstrapIsar(String dir) async {
+  if (await MigrationTracker.needsMigration()) {
+    await migrateLegacyDb(dir);
+    await MigrationTracker.markDone();
+  }
+
+  final isar = plus.Isar.open(
+    schemas: [UserSchema, TodoSchema],
+    directory: dir,
+  );
+
+  runApp(MyApp(isar: isar));
+}
+```
+
+<Callout type="info" title="Alternatif Yaklaşımlar">
+  Gelecekteki geçişleri de öngörüyorsanız boolean yerine sayısal bir şema sürümü
+  (`legacy` için 3, Isar Plus için 4 gibi) saklayabilirsiniz. Masaüstü veya
+  sunucu build'lerinde SharedPreferences yerine veritabanı dizininin yanına
+  küçük bir `.migrated` dosyası yazabilirsiniz.
+</Callout>
+
+## Temizlik
+
+Her koleksiyonun kopyalanması bittiğinde:
+
+<Steps>
+### Bayrağı Kaydet
+
+Geçişin tamamlandığını işaretleyin:
+
+```dart
+await prefs.setBool('migratedToIsarPlus', true);
+```
+
+### Legacy Dosyalarını Sil
+
+Eski veritabanı dosyalarını kaldırın:
+
+```dart
+await plus.Isar.deleteDatabase(
+  name: 'legacy',
+  directory: directoryPath,
+  engine: plus.IsarEngine.isar,
+);
+```
+
+### Bağımlılıkları Kaldır
+
+`pubspec.yaml` dosyasından `isar` ve `isar_flutter_libs` paketlerini çıkarın.
+
+### Veritabanını Yeniden Adlandır
+
+İsterseniz yeni veritabanının adını tekrar orijinal adınıza çevirin.
+
+</Steps>
+
+Legacy build'i artık kullanıcılar açmadığından emin olduktan sonra yalnızca `idris_db`a bağımlı bir güncelleme yayınlayın.
+
+## Sorun Giderme
+
+### VersionError Devam Ediyor
+
+<Callout type="error" title="Çözüm">
+  v4 örneğini açmadan önce v3 dosyalarını sildiğinizden emin olun. Eski WAL/LCK
+  dosyaları legacy header'ı tutmaya devam edebilir.
+</Callout>
+
+### Yinelenen Birincil Anahtarlar
+
+<Callout type="warn" title="ID Gereksinimleri">
+  v4 ID'lerinin benzersiz, null olmayan tamsayılar olması gerektiğini unutmayın.
+  Kopyalama sırasında `collection.autoIncrement()` metodunu kullanın veya
+  deterministik anahtarlar üretin.
+</Callout>
+
+### Üreteç Hata Veriyor
+
+Derleme öncesinde temizlik yapın:
+
+```bash
+dart pub clean
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Hiçbir `part '...g.dart';` yönergesinin eksik olmadığından emin olun.
+
+### Geri Dönmek İstiyorum
+
+<Callout type="info" title="Güvenli Geçiş">
+  Geçiş ayrı bir veritabanına yazdığı için kopyalama bitene kadar yeni dosyaları
+  güvenle silebilir ve legacy olanları saklayabilirsiniz.
+</Callout>
+
+Bu adımları tamamladıktan sonra kullanıcılar `isar` 3.x sürümünden `idris_db` yayınınıza veri kaybetmeden geçiş yapabilir.

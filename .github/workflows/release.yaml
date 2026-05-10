@@ -1,0 +1,208 @@
+﻿name: IdrisDb Plus release
+
+on:
+  push:
+    tags:
+      - "*"
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build_binaries:
+    name: "Build: ${{ matrix.name }}"
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        include:
+          - name: "Android ARM64"
+            os: ubuntu-latest
+            artifact_name: libIDRISDB_android_arm64.so
+            script: build_android.sh
+            upload_path: libIDRISDB_android_arm64.so
+          - name: "Android ARMv7"
+            os: ubuntu-latest
+            artifact_name: libIDRISDB_android_armv7.so
+            script: build_android.sh armv7
+            upload_path: libIDRISDB_android_armv7.so
+          - name: "Android x64"
+            os: ubuntu-latest
+            artifact_name: libIDRISDB_android_x64.so
+            script: build_android.sh x64
+            upload_path: libIDRISDB_android_x64.so
+          - name: "Darwin XCFramework"
+            os: macos-latest
+            artifact_name: IDRISDBPlusCore.xcframework.zip
+            script: build_darwin.sh
+            upload_path: |
+              IDRISDBPlusCore.xcframework.zip
+              IDRISDBPlusCore.xcframework.zip.sha256
+          - name: "Linux x64"
+            os: ubuntu-latest
+            artifact_name: libIDRISDB_linux_x64.so
+            script: build_linux.sh x64
+            upload_path: libIDRISDB_linux_x64.so
+          - name: "Windows x64"
+            os: windows-latest
+            artifact_name: IDRISDB_windows_x64.dll
+            script: build_windows.sh x64
+            upload_path: IDRISDB_windows_x64.dll
+          - name: "WebAssembly"
+            os: ubuntu-latest
+            artifact_name: wasm_files
+            script: build_wasm.sh
+            upload_path: |
+              IdrisDb.wasm
+              IdrisDb.js
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare Build
+        uses: ./.github/actions/prepare-build
+      - name: Set IdrisDb Version
+        shell: bash
+        run: echo "IDRISDB_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+      - name: Build binary
+        run: bash tool/${{ matrix.script }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.upload_path }}
+          retention-days: 1
+
+  publish:
+    name: Publish
+    needs: build_binaries
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: subosito/flutter-action@v2
+      - name: Enable Swift Package Manager
+        run: flutter config --enable-swift-package-manager
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: 'https://registry.npmjs.org'
+      - name: Set IdrisDb Version
+        run: echo "IDRISDB_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Move artifacts to root
+        run: |
+          echo "Artifact directory structure:"
+          find ./artifacts -type f
+
+          for artifact_dir in ./artifacts/*/; do
+            if [ -d "$artifact_dir" ]; then
+              echo "Processing directory: $artifact_dir"
+              find "$artifact_dir" -maxdepth 1 -type f -exec mv {} ./ \;
+            fi
+          done
+
+          echo "Files in root directory:"
+          ls -la *.so *.dll *.wasm *.js *.zip 2>/dev/null || echo "No binary files found in root"
+
+      - name: Create latest release
+        run: |
+          if [[ "${{ github.ref_name }}" == *"dev"* ]] || [[ "${{ github.ref_name }}" == *"beta"* ]] || [[ "${{ github.ref_name }}" == *"alpha"* ]]; then
+            PRERELEASE_FLAG="--prerelease"
+          else
+            PRERELEASE_FLAG="--latest"
+          fi
+
+          gh release create ${{ github.ref_name }} \
+            libIDRISDB_android_arm64.so \
+            libIDRISDB_android_armv7.so \
+            libIDRISDB_android_x64.so \
+            IDRISDBPlusCore.xcframework.zip \
+            libIDRISDB_linux_x64.so \
+            IDRISDB_windows_x64.dll \
+            IdrisDb.wasm \
+            IdrisDb.js \
+            --title "IdrisDb Plus ${{ github.ref_name }}" \
+            --generate-notes \
+            $PRERELEASE_FLAG
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download Binaries (for pub.dev)
+        run: sh tool/download_binaries.sh
+
+      - name: Adjust Version
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          find . -type f -exec sed -i "s/0.0.0-placeholder/${VERSION}/g" {} +
+
+      - name: Update Package.swift checksum and URL
+        run: |
+          CHECKSUM=$(cat IDRISDBPlusCore.xcframework.zip.sha256)
+          RELEASE_URL="https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/IDRISDBPlusCore.xcframework.zip"
+          sed -i \
+            -e "s|url: \".*IDRISDBPlusCore.xcframework.zip\"|url: \"${RELEASE_URL}\"|" \
+            -e "s|checksum: \".*\"|checksum: \"${CHECKSUM}\"|" \
+            packages/idris_db_flutter_libs/darwin/idris_db_flutter_libs/Package.swift
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Publish to npm
+        run: |
+          if [[ "${{ github.ref_name }}" == *"dev"* ]] || [[ "${{ github.ref_name }}" == *"beta"* ]] || [[ "${{ github.ref_name }}" == *"alpha"* ]]; then
+            TAG_FLAG="--tag dev"
+          else
+            TAG_FLAG=""
+          fi
+          npm publish --provenance $TAG_FLAG
+
+      - name: pub.dev credentials
+        run: |
+          mkdir -p $HOME/.config/dart
+          echo '${{ secrets.PUB_JSON }}' >> $HOME/.config/dart/pub-credentials.json
+
+      - name: Publish IdrisDb
+        run: |
+          dart pub get
+          dart pub publish --force
+        working-directory: packages/idris_db
+
+      - name: Publish idris_db_flutter_libs
+        run: |
+          flutter pub get
+          flutter pub publish --force
+        working-directory: packages/idris_db_flutter_libs
+
+      - name: Update CHANGELOG files
+        run: |
+          sleep 5
+          chmod +x tool/update_changelog.sh
+          ./tool/update_changelog.sh "${{ github.ref_name }}" "${{ github.repository_owner }}" "idris_db"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit CHANGELOG updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          if git diff --quiet packages/*/CHANGELOG.md; then
+            echo "No CHANGELOG changes to commit"
+          else
+            git add packages/*/CHANGELOG.md
+            git commit -m "docs: update CHANGELOG files for release ${{ github.ref_name }}"
+            git push origin HEAD:main
+            echo "CHANGELOG files updated and committed"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

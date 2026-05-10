@@ -1,0 +1,251 @@
+﻿import 'package:idris_db/idris_db.dart';
+import 'package:idris_db_test/idris_db_test.dart';
+import 'package:test/test.dart';
+
+part 'sort_by_test.g.dart';
+
+@collection
+class Model {
+  Model(this.id, this.name, this.active);
+
+  final int id;
+
+  final String name;
+
+  final bool active;
+
+  @override
+  bool operator ==(other) =>
+      other is Model &&
+      other.name == name &&
+      other.id == id &&
+      other.active == active;
+}
+
+void main() {
+  group('Sort By', () {
+    late IdrisDbCollection<int, Model> col;
+
+    late Model modelA1;
+    late Model modelA2;
+    late Model modelB1;
+    late Model modelB2;
+    late Model modelC1;
+    late Model modelC2;
+
+    setUp(() async {
+      final IdrisDb = await openTempIDRISDB([ModelSchema]);
+      col = IdrisDb.models;
+
+      modelA1 = Model(100, 'a', true);
+      modelA2 = Model(200, 'a', true);
+      modelB1 = Model(10, 'b', true);
+      modelB2 = Model(20, 'b', false);
+      modelC1 = Model(1, 'c', false);
+      modelC2 = Model(2, 'c', true);
+
+      IdrisDb.write(
+        (IdrisDb) => IdrisDb.models.putAll([
+          modelA1,
+          modelA2,
+          modelB1,
+          modelB2,
+          modelC1,
+          modelC2,
+        ]),
+      );
+    });
+
+    IdrisDbTest('.sortBy()', () {
+      expect(col.where().sortByName().findAll(), [
+        modelA1,
+        modelA2,
+        modelB1,
+        modelB2,
+        modelC1,
+        modelC2,
+      ]);
+
+      expect(col.where().nameBetween('b', 'c').sortByName().findAll(), [
+        modelB1,
+        modelB2,
+        modelC1,
+        modelC2,
+      ]);
+
+      expect(col.where().sortByName().thenByNameDesc().findAll(), [
+        modelA1,
+        modelA2,
+        modelB1,
+        modelB2,
+        modelC1,
+        modelC2,
+      ]);
+
+      expect(col.where().sortByActive().findAll(), [
+        modelC1,
+        modelB2,
+        modelC2,
+        modelB1,
+        modelA1,
+        modelA2,
+      ]);
+
+      expect(col.where().sortById().findAll(), [
+        modelC1,
+        modelC2,
+        modelB1,
+        modelB2,
+        modelA1,
+        modelA2,
+      ]);
+
+      expect(col.where().findAll(), [
+        modelC1,
+        modelC2,
+        modelB1,
+        modelB2,
+        modelA1,
+        modelA2,
+      ]);
+    });
+
+    IdrisDbTest('.sortByDesc()', () {
+      expect(col.where().sortByNameDesc().findAll(), [
+        modelC1,
+        modelC2,
+        modelB1,
+        modelB2,
+        modelA1,
+        modelA2,
+      ]);
+
+      expect(col.where().nameBetween('b', 'c').sortByNameDesc().findAll(), [
+        modelC1,
+        modelC2,
+        modelB1,
+        modelB2,
+      ]);
+
+      expect(col.where().sortByNameDesc().thenByName().findAll(), [
+        modelC1,
+        modelC2,
+        modelB1,
+        modelB2,
+        modelA1,
+        modelA2,
+      ]);
+
+      expect(col.where().sortByActiveDesc().findAll(), [
+        modelC2,
+        modelB1,
+        modelA1,
+        modelA2,
+        modelC1,
+        modelB2,
+      ]);
+
+      expect(col.where().sortByIdDesc().findAll(), [
+        modelA2,
+        modelA1,
+        modelB2,
+        modelB1,
+        modelC2,
+        modelC1,
+      ]);
+
+      expect(col.where().findAll(), [
+        modelC1,
+        modelC2,
+        modelB1,
+        modelB2,
+        modelA1,
+        modelA2,
+      ]);
+    });
+
+    IdrisDbTest('.sortBy().thenBy()', () {
+      expect(col.where().sortByName().thenById().findAll(), [
+        modelA1,
+        modelA2,
+        modelB1,
+        modelB2,
+        modelC1,
+        modelC2,
+      ]);
+
+      expect(col.where().sortByActive().thenByName().findAll(), [
+        modelB2,
+        modelC1,
+        modelA1,
+        modelA2,
+        modelB1,
+        modelC2,
+      ]);
+
+      expect(
+        col.where().activeEqualTo(true).sortByName().thenById().findAll(),
+        [modelA1, modelA2, modelB1, modelC2],
+      );
+    });
+
+    IdrisDbTest('.sortBy().thenByDesc()', () {
+      expect(col.where().sortByName().thenByIdDesc().findAll(), [
+        modelA2,
+        modelA1,
+        modelB2,
+        modelB1,
+        modelC2,
+        modelC1,
+      ]);
+
+      expect(col.where().sortByActive().thenByNameDesc().findAll(), [
+        modelC1,
+        modelB2,
+        modelC2,
+        modelB1,
+        modelA1,
+        modelA2,
+      ]);
+
+      expect(
+        col.where().activeEqualTo(true).sortByName().thenByIdDesc().findAll(),
+        [modelA2, modelA1, modelB1, modelC2],
+      );
+    });
+
+    IdrisDbTest('.sortBy().thenBy().thenBy()', () {
+      expect(col.where().sortByActive().thenByName().thenByIdDesc().findAll(), [
+        modelB2,
+        modelC1,
+        modelA2,
+        modelA1,
+        modelB1,
+        modelC2,
+      ]);
+    });
+
+    IdrisDbTest('.distinctBy() with single property', () {
+      final results = col.where().distinctByName().findAll();
+
+      expect(results.length, 3);
+
+      final names = results.map((m) => m.name).toSet();
+      expect(names, {'a', 'b', 'c'});
+    });
+
+    IdrisDbTest('.distinctBy() on bool property', () {
+      final results = col.where().distinctByActive().findAll();
+
+      expect(results.length, 2);
+    });
+
+    IdrisDbTest('.distinctBy() case insensitive', () {
+      final results = col
+          .where()
+          .distinctByName(caseSensitive: false)
+          .findAll();
+      expect(results.length, 3);
+    });
+  });
+}

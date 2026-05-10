@@ -1,0 +1,67 @@
+﻿name: "Prepare Build"
+description: "Prepares the build for IdrisDb Core"
+runs:
+  using: "composite"
+  steps:
+    - name: Install latest Rust nightly
+      uses: dtolnay/rust-toolchain@nightly
+      with:
+        components: rustfmt, clippy
+    
+    - name: Cache Rust dependencies
+      uses: Swatinem/rust-cache@v2
+      with:
+        # Cache all Cargo registry, git dependencies, and build artifacts
+        shared-key: IdrisDb-core
+        # Cache for all targets (iOS, Android, etc.)
+        cache-all-crates: true
+    
+    - name: Cache wasm-bindgen-cli
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/bin/wasm-bindgen
+        key: ${{ runner.os }}-${{ runner.arch }}-wasm-bindgen-0.2.114
+    
+    - name: Install wasm-bindgen-cli
+      shell: bash
+      run: |
+        if ! command -v wasm-bindgen &> /dev/null || ! wasm-bindgen --version | grep -q "0.2.114"; then
+          cargo install wasm-bindgen-cli --force --version 0.2.114
+        else
+          echo "wasm-bindgen 0.2.114 is already installed"
+        fi
+    
+    - name: Set Windows environment variables
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        echo "LIBCLANG_PATH=$((gcm clang).source -replace 'clang.exe')" >> $env:GITHUB_ENV
+        echo "OPENSSL_SRC_PERL=$((gcm perl).source)" >> $env:GITHUB_ENV
+    
+    - name: Set up Android NDK environment
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        # Set NDK version if not already set
+        if [ -z "$ANDROID_NDK_VERSION" ]; then
+          # Find the latest NDK version
+          NDK_VERSION=$(ls $ANDROID_SDK_ROOT/ndk | grep -E '^[0-9]+\.' | sort -V | tail -n 1)
+          echo "ANDROID_NDK_VERSION=$NDK_VERSION" >> $GITHUB_ENV
+        fi
+    
+    - name: Set up iOS environment
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        # Set up iOS SDK environment
+        echo "IPHONEOS_DEPLOYMENT_TARGET=11.0" >> $GITHUB_ENV
+        # Ensure Xcode command line tools are properly configured
+        sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+    
+    # See https://github.com/godot-rust/godot-rust/pull/920
+    - name: "Workaround Android NDK due to Rust bug"
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      shell: bash
+      run: >
+        find -L $ANDROID_SDK_ROOT/ndk/$ANDROID_NDK_VERSION -name libunwind.a
+        -execdir sh -c 'echo "INPUT(-lunwind)" > libgcc.a' \;
