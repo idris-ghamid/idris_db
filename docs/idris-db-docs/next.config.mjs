@@ -5,12 +5,6 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
-  turbopack: {
-    resolveAlias: {
-      '@/*': './*',
-      'fumadocs-mdx:collections/*': './.source/*',
-    },
-  },
   async rewrites() {
     return [
       {

@@ -1,6 +1,6 @@
-﻿<p align="center">
-  <a href="https://github.com/ahmtydn/IdrisDb">
-    <img src="https://raw.githubusercontent.com/ahmtydn/idris_db/main/.github/assets/IdrisDb.svg?sanitize=true" width="160">
+<p align="center">
+  <a href="https://github.com/idris-ghamid/idris_db">
+    <img src=".github/assets/IdrisDb.svg" width="160">
   </a>
   <h1 align="center">IdrisDb Plus Database</h1>
 </p>
@@ -8,8 +8,8 @@
 <p align="center">
   <a href="https://pub.dev/packages/idris_db"><img src="https://img.shields.io/pub/v/idris_db?label=pub.dev&labelColor=333940&logo=dart"></a>
   <a href="https://pub.dev/packages/idris_db/score"><img src="https://img.shields.io/pub/points/idris_db?label=score&labelColor=333940&logo=dart"></a>
-  <a href="https://app.codecov.io/gh/ahmtydn/idris_db"><img src="https://img.shields.io/codecov/c/github/ahmtydn/idris_db?logo=codecov&logoColor=fff&labelColor=333940"></a>
-  <a href="https://github.com/ahmtydn/idris_db"><img src="https://img.shields.io/github/stars/ahmtydn/idris_db?style=social"></a>
+  <a href="https://app.codecov.io/gh/idris-ghamid/idris_db"><img src="https://img.shields.io/codecov/c/github/idris-ghamid/idris_db?logo=codecov&logoColor=fff&labelColor=333940"></a>
+  <a href="https://github.com/idris-ghamid/idris_db"><img src="https://img.shields.io/github/stars/idris-ghamid/idris_db?style=social"></a>
 </p>
 
 <p align="center">
@@ -43,10 +43,10 @@ IdrisDb Plus is an enhanced fork of the original [IdrisDb database](https://gith
 
 ## Documentation
 
-📚 **Comprehensive documentation is available at [IDRISDBplus.ahmetaydin.dev](https://IDRISDBplus.ahmetaydin.dev)**
+📚 **Comprehensive documentation is available at [idris-db-docs.vercel.app](https://idris-db-docs.vercel.app/)**
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ahmtydn/idris_db/main/.github/assets/IDRISDB_docs.png?sanitize=true" alt="IdrisDb Plus Documentation" width="600">
+  <img src=".github/assets/IDRISDB_docs.png" alt="IdrisDb Plus Documentation" width="600">
 </p>
 
 Join the [Telegram group](https://t.me/IDRISDBplus) for discussion and sneak peeks of new versions of the DB.
