@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next';
 import { source } from '../lib/source';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://isarplus.ahmetaydin.dev';
-    const languages = ['en', 'tr'];
+    const baseUrl = 'https://idris-db-docs.vercel.app';
+    const languages = ['en', 'tr', 'ar'];
 
     const urls: MetadataRoute.Sitemap = [
         {
@@ -29,8 +29,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const pages = source.getPages(lang);
         pages.forEach((page) => {
             let pageUrl = page.url;
-            if (!pageUrl.startsWith(`/${lang}/`)) {
-                pageUrl = `/${lang}${pageUrl}`;
+            // Ensure the URL is correctly formatted with the language prefix
+            if (!pageUrl.startsWith(`/${lang}`)) {
+                pageUrl = `/${lang}${pageUrl.startsWith('/') ? '' : '/'}${pageUrl}`;
             }
             urls.push({
                 url: `${baseUrl}${pageUrl}`,
