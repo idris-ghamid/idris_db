@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/idris-ghamid/idris_db">
-    <img src=".github/assets/IdrisDb.svg" width="160">
+    <img src="../../assets/logo.png" width="160">
   </a>
   <h1 align="center">IdrisDb Plus Database</h1>
 </p>
@@ -46,7 +46,7 @@ IdrisDb Plus is an enhanced fork of the original [IdrisDb database](https://gith
 📚 **Comprehensive documentation is available at [idris-db-docs.vercel.app](https://idris-db-docs.vercel.app/)**
 
 <p align="center">
-  <img src=".github/assets/IDRISDB_docs.png" alt="IdrisDb Plus Documentation" width="600">
+  <img src="../../.github/assets/IDRISDB_docs.png" alt="IdrisDb Plus Documentation" width="600">
 </p>
 
 Join the [Telegram group](https://t.me/IDRISDBplus) for discussion and sneak peeks of new versions of the DB.
