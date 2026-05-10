@@ -1,99 +1,24 @@
 ---
-title: إدريس دي بي (idris DB)
-description: أسرع قاعدة بيانات NoSQL لـ Flutter - مقدمة من IDRISIUM Corp
-icon: Home
+title: مقدمة
+description: أهلاً بك في توثيق إدريس دي بي
 ---
 
-import { Card, Cards } from 'fumadocs-ui/components/card';
-import { DynamicLink } from 'fumadocs-core/dynamic-link';
-import Image from 'next/image';
-import { buttonVariants } from 'fumadocs-ui/components/ui/button';
+# مقدمة
 
-<div className="flex flex-col items-center text-center" dir="rtl" style={{ gap: 0 }}>
-  <Image
-    src="/logo.png"
-    alt="Idris DB Logo"
-    width={160}
-    height={160}
-    priority
-    className="drop-shadow-lg"
-    style={{ margin: 0 }}
-  />
+أهلاً بك في التوثيق الرسمي لـ **إدريس دي بي (idris DB)**، قاعدة بيانات NoSQL عالية الأداء المخصصة لـ Flutter.
 
-  <h1 className="text-5xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-teal-500 text-transparent bg-clip-text" style={{ marginTop: '0.5rem', marginBottom: 0 }}>
-    إدريس دي بي (idris DB)
-  </h1>
+## ما هو إدريس دي بي؟
 
-  <div className="text-xl text-gray-600 dark:text-gray-300 max-w-xl leading-relaxed" style={{ margin: 0 }}>
-    أسرع قاعدة بيانات NoSQL لـ Flutter — مصممة للأداء العالي، تجربة مطور استثنائية، وقابلية توسع لا نهائية.
-  </div>
+إدريس دي بي هو نسخة مطورة من Isar، تم تحسينها بواسطة IDRISIUM Corp لتقديم أداء فائق، أدوات تصحيح أخطاء متقدمة، ودعم لغة عربية من الدرجة الأولى.
 
-  <div className="not-prose flex justify-center" style={{ marginTop: '1rem', marginBottom: '3rem' }}>
-    <DynamicLink
-      href="/[lang]/docs/quickstart"
-      className={buttonVariants({ variant: 'primary', className: 'text-lg px-10 py-6 gap-2 rounded-2xl shadow-md hover:shadow-lg transition-all' })}
-    >
-      <span className="text-2xl">🚀</span>
-      <span>ابدأ الآن!</span>
-    </DynamicLink>
-  </div>
-</div>
+## الميزات الرئيسية
 
-<Cards className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3" dir="rtl">
-  <Card 
-    title="💙 صُنع لـ Flutter" 
-    description="إعداد بسيط، سهل الاستخدام، بدون تعقيدات أو كود مكرر. بضعة أسطر فقط وتبدأ العمل."
-  />
-  <Card 
-    title="🚀 قابل للتوسع بشكل هائل" 
-    description="خزن مئات الآلاف من السجلات في قاعدة بيانات واحدة واستعلم عنها بكفاءة عالية وبشكل غير متزامن."
-  />
-  <Card 
-    title="🍭 ميزات غنية" 
-    description="يحتوي إدريس دي بي على مجموعة غنية من الميزات لمساعدتك في إدارة بياناتك. فهارس مركبة، تعديلات الاستعلام، دعم JSON والمزيد."
-  />
-  <Card 
-    title="🔎 بحث كامل في النصوص" 
-    description="بحث مدمج في النصوص الكاملة. أنشئ فهرساً وابحث في السجلات بسهولة فائقة."
-  />
-  <Card 
-    title="🧪 معاملات ACID" 
-    description="متوافق مع معايير ACID ويتعامل مع المعاملات تلقائياً. يتراجع عن التغييرات في حال حدوث خطأ."
-  />
-  <Card 
-    title="💃 كتابة قوية (Static Typing)" 
-    description="استعلامات إدريس دي بي مكتوبة بقوة ويتم فحصها وقت البرمجة. لا داعي للقلق بشأن أخطاء وقت التشغيل."
-  />
-  <Card 
-    title="📱 متعدد المنصات" 
-    description="iOS، Android، Desktop، وتخزين دائم لـ Flutter Web عبر OPFS/IndexedDB."
-  />
-  <Card 
-    title="⏱ غير متزامن" 
-    description="دعم العمليات المتوازية والـ multi-isolate بشكل افتراضي."
-  />
-  <Card 
-    title="🦄 مفتوح المصدر" 
-    description="كل شيء مفتوح المصدر ومجاني للأبد!"
-  />
-  <Card 
-    title="✨ أخطاء محسنة" 
-    description="رسائل خطأ واضحة وعملية مع تلميحات وحلول باللغتين الإنجليزية والعربية."
-  />
-  <Card 
-    title="📊 محلل الاستعلامات" 
-    description="تحليل ذكي للاستعلامات مع اقتراحات للفهارس ورؤى حول الأداء."
-  />
-  <Card 
-    title="🔍 سجلات ذكية" 
-    description="نظام تسجيل (Logging) متعدد المستويات مع تتبع الاستعلامات والمعاملات."
-  />
-  <Card 
-    title="🌍 دعم اللغة العربية" 
-    description="دعم ثنائي اللغة كامل (English + العربية) لرسائل الخطأ والتوثيق."
-  />
-</Cards>
+- **سرعة فائقة**: أسرع بـ 10 أضعاف من حلول NoSQL التقليدية.
+- **أمان الأنواع (Type Safe)**: وداعاً لأخطاء وقت التشغيل مع نظام توليد الكود.
+- **محلل الاستعلامات**: أداة حصرية لتحسين أداء قاعدة بياناتك.
+- **سجلات ذكية**: نظام تسجيل أخطاء وتتبع عمليات على مستوى الإنتاج.
+- **ثنائي اللغة**: مصمم خصيصاً للمطورين باللغتين العربية والإنجليزية.
 
-<div className="mt-12 text-center text-sm text-muted-foreground">
-  حقوق الطبع والنشر © 2026 IDRISIUM Corp | بُني بكل حب بواسطة إدريس غامد (Idris Ghamid)
-</div>
+## الخطوات التالية
+
+جاهز للبناء؟ تحقق من دليل [البدء السريع](/docs/quickstart)!

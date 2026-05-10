@@ -1,9 +1,15 @@
+import './globals.css';
+import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+const inter = Inter({
+  subsets: ['latin'],
+});
+
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html>
-      <body>{children}</body>
+    <html lang="en" className={inter.className} suppressHydrationWarning>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

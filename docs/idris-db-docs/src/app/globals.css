@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "fumadocs-ui/style.css";
+
+@theme {
+  --color-idrisium-charcoal: #212529;
+  --color-idrisium-steel: #343A40;
+  --color-idrisium-accent: #73877B;
+}
+
+@layer base {
+  :root {
+    --fd-primary: 115 135 123;
+    --fd-primary-foreground: 255 255 255;
+  }
+
+  .dark {
+    --fd-primary: 115 135 123;
+    --fd-primary-foreground: 255 255 255;
+  }
+}
