@@ -1,4 +1,4 @@
-import { source } from '@/lib/source';
+import { source } from '../../../../lib/source';
 import {
   DocsPage,
   DocsBody,
@@ -6,7 +6,7 @@ import {
   DocsDescription,
 } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
-import { i18n } from '@/lib/i18n';
+import { i18n } from '../../../../lib/i18n';
 
 export default async function Page({
   params,
