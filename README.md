@@ -1,18 +1,34 @@
-﻿# 🗄️ Idris DB
+﻿<div align="center">
 
-**The Fastest NoSQL Database for Flutter**
+<img src="assets/logo.png" alt="Idris DB Banner" width="100%"/>
+
+# 🗄️ Idris DB
+
+### **The Fastest NoSQL Database for Flutter**
 
 [![pub package](https://img.shields.io/pub/v/idris_db.svg)](https://pub.dev/packages/idris_db)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![GitHub](https://img.shields.io/github/stars/idris-ghamid/idris_db?style=social)](https://github.com/idris-ghamid/idris_db)
+[![GitHub Stars](https://img.shields.io/github/stars/idris-ghamid/idris_db?style=social)](https://github.com/idris-ghamid/idris_db)
+[![Pub Points](https://img.shields.io/pub/points/idris_db)](https://pub.dev/packages/idris_db/score)
+[![Pub Likes](https://img.shields.io/pub/likes/idris_db)](https://pub.dev/packages/idris_db)
 
-Built by **IDRISIUM Corp** | **idris ghamid** (إدريس غامد)
+**Built with ❤️ by [IDRISIUM Corp](http://idrisium.linkpc.net) | Idris Ghamid (إدريس غامد)**
+
+[Features](#-why-idris-db) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Roadmap](#-roadmap) • [Documentation](#-documentation)
+
+</div>
 
 ---
 
-## ✨ Why Idris DB?
+<div align="center">
 
-Idris DB is an enhanced fork of idris_db with a **clear roadmap** for exclusive features that will make it the best choice for Flutter developers.
+## ✨ Why Choose Idris DB?
+
+<img src="assets/Gemini_Generated_Image_f1neb8f1neb8f1ne.png" alt="Why Choose Idris DB" width="90%"/>
+
+**Idris DB is an enhanced fork of Isar with exclusive features that make it the best choice for Flutter developers.**
+
+</div>
 
 ### ⚡ **Core Features (Available Now)**
 
@@ -28,6 +44,10 @@ Built on the solid foundation of Isar:
 - **Watchers** - Real-time data updates
 
 ### 🚧 **Enhanced Features (In Development)**
+
+<div align="center">
+<img src="assets/Gemini_Generated_Image_g1hxi8g1hxi8g1hx.png" alt="Enhanced Features" width="90%"/>
+</div>
 
 We're actively working on exclusive features:
 
@@ -49,7 +69,13 @@ We're actively working on exclusive features:
 11. **Visual Inspector** - Debug widget for development
 12. **And 40+ more features!** - See our [roadmap](ULTIMATE_50_FEATURES.md)
 
-### 🎯 **Our Vision**
+---
+
+## 🎯 Our Vision
+
+<div align="center">
+<img src="assets/Gemini_Generated_Image_jxmz6fjxmz6fjxmz.png" alt="Idris DB Vision" width="90%"/>
+</div>
 
 Idris DB aims to be **"The Developer-First Database"** - not just fast, but with tools that make you a better, more productive developer.
 
@@ -211,6 +237,54 @@ IdrisDbEnhancedError.language = locale.startsWith('ar') ? 'ar' : 'en';
 
 ### And More!
 See our [complete roadmap](ULTIMATE_50_FEATURES.md) for all 50 planned features!
+
+---
+
+## 🎯 Feature Icons
+
+<div align="center">
+<img src="assets/Gemini_Generated_Image_biii5rbiii5rbiii.png" alt="Feature Icons" width="80%"/>
+</div>
+
+---
+
+## 📊 Performance Benchmarks
+
+Idris DB (built on Isar) is **blazing fast** - up to 10x faster than other Flutter databases:
+
+<div align="center">
+
+<img src="assets/Gemini_Generated_Image_t4folft4folft4fo.png" alt="Flutter Database Library Comparison" width="90%"/>
+
+### Detailed Benchmarks
+
+### Insert Performance
+<img src="assets/benchmarks/insert.png" alt="Insert Benchmark" width="80%"/>
+
+### Query Performance
+<img src="assets/benchmarks/query.png" alt="Query Benchmark" width="80%"/>
+
+### Update Performance
+<img src="assets/benchmarks/update.png" alt="Update Benchmark" width="80%"/>
+
+### Database Size
+<img src="assets/benchmarks/size.png" alt="Size Comparison" width="80%"/>
+
+</div>
+
+*Benchmarks run on real devices. Your results may vary.*
+
+---
+
+## 🔍 Database Inspector
+
+Idris DB comes with a powerful visual inspector for debugging:
+
+<div align="center">
+<img src="assets/inspector.gif" alt="Idris DB Inspector" width="90%"/>
+</div>
+
+To launch the inspector, run your app in debug mode and open the inspector link in the logs.
 
 ---
 

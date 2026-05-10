@@ -1,6 +1,6 @@
 ﻿{
-  "name": "IdrisDb-plus-docs",
-  "version": "0.0.0",
+  "name": "idris-db-docs",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "next build",
