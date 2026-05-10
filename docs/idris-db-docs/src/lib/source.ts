@@ -1,6 +1,6 @@
 import { loader } from 'fumadocs-core/source';
 import { i18n } from './i18n';
-import { docs } from 'fumadocs-mdx:collections/server';
+import { docs } from '../../.source/server';
 import { icons } from 'lucide-react';
 import { createElement } from 'react';
 
