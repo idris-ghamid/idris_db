@@ -13,7 +13,7 @@ const config = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      source: path.resolve(__dirname, './.source'),
+      '@source': path.resolve(__dirname, './.source'),
     };
     config.resolve.preferRelative = true;
     return config;
