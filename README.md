@@ -1,8 +1,8 @@
-﻿<div align="center">
+﻿﻿<div align="center">
 
-<img src="assets/logo.png" alt="Idris DB Banner" width="100%"/>
+<img src="assets/logo.png" alt="Idris DB Banner" width="25%"/>
 
-# 🗄️ Idris DB
+# 🗄️ idris DB
 
 ### **The Fastest NoSQL Database for Flutter**
 
