@@ -1,4 +1,4 @@
-import { i18n } from '@/lib/i18n';
+import { i18n } from './src/lib/i18n';
 import { NextRequest, NextResponse } from 'next/server';
 import { isMarkdownPreferred, rewritePath } from 'fumadocs-core/negotiation';
 

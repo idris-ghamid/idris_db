@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { source } from '@/lib/source';
+import { source } from '../lib/source';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://isarplus.ahmetaydin.dev';

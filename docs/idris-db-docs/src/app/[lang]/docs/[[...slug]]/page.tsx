@@ -6,9 +6,9 @@ import {
   DocsTitle,
 } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/mdx-components';
+import { getMDXComponents } from '../../../../mdx-components';
 import type { Metadata } from 'next';
-import { LLMCopyButton, ViewOptions } from '@/components/page-actions';
+import { LLMCopyButton, ViewOptions } from '../../../../components/page-actions';
 
 export default async function Page(
   props: {
