@@ -372,6 +372,6 @@ Idris DB is in **active development**. The core database functionality (from Isa
 
 ---
 
-**Built with ❤️ by IDRISIUM Corp**
+**Built by IDRIS GHAMID**
 
 *Making Flutter development faster and easier, one database at a time.*

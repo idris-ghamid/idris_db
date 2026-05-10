@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { i18n } from '@/lib/i18n';
+import { i18n } from './i18n';
 import { PackageIcon } from 'lucide-react';
 
 const BuyMeACoffeeIcon = () => (

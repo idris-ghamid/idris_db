@@ -1,4 +1,4 @@
-import { getPubVersion } from '@/lib/pub-dev';
+import { getPubVersion } from './pub-dev';
 
 // Cache versions at build time
 let versionsCache: Record<string, string> | null = null;
