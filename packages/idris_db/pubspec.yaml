@@ -9,14 +9,11 @@ funding:
   - https://github.com/sponsors/idris-ghamid
 topics:
   - database
-  - idris-db
   - nosql
   - flutter
-  - storage
-  - idrisium
   - performance
   - offline-first
-
+  
 environment:
   sdk: ">=3.7.0 <4.0.0"
 
