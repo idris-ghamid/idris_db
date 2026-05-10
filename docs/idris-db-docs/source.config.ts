@@ -4,4 +4,10 @@ export const { docs, meta } = defineDocs({
   dir: 'content/docs',
 });
 
-export default defineConfig();
+export default defineConfig({
+  mdxOptions: {
+    remarkCodeTabOptions: {
+      parseMdx: true,
+    },
+  },
+});
