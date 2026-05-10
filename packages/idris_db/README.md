@@ -1,8 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/idris-ghamid/idris_db/main/assets/logo.png" alt="Idris DB Banner" width="25%"/>
-
-# 🗄️ idris DB
+<img src="https://raw.githubusercontent.com/idris-ghamid/idris_db/main/assets/logo.png" alt="Idris DB Banner" width="50%"/>
 
 ### **The Fastest NoSQL Database for Flutter**
 
@@ -12,7 +10,7 @@
 [![Pub Points](https://img.shields.io/pub/points/idris_db)](https://pub.dev/packages/idris_db/score)
 [![Pub Likes](https://img.shields.io/pub/likes/idris_db)](https://pub.dev/packages/idris_db)
 
-**Built with ❤️ by [IDRISIUM Corp](http://idrisium.linkpc.net) | Idris Ghamid (إدريس غامد)**
+**Built by [IDRISIUM Corp](http://idrisium.linkpc.net) | Idris Ghamid (إدريس غامد)**
 
 [Features](#-why-choose-idris-db) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Roadmap](#-roadmap) • [Documentation](#-documentation)
 
@@ -87,10 +85,10 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  idris_db: ^1.0.4
+  idris_db: ^1.0.5
 
 dev_dependencies:
-  idris_db_generator: ^1.0.4
+  idris_db_generator: ^1.0.5
   build_runner: ^2.4.0
 ```
 

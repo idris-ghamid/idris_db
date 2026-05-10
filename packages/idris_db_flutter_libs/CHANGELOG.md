@@ -454,7 +454,7 @@
 
 ## What's Changed
 ### Other Changes
-* fix: resolve duplicate watcher events in detailed watchers (v1.0.4) by @ahmtydn in https://github.com/ahmtydn/idris_db/pull/16
+* fix: resolve duplicate watcher events in detailed watchers (v1.0.5) by @ahmtydn in https://github.com/ahmtydn/idris_db/pull/16
 
 
 **Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.11...1.0.12
@@ -532,19 +532,19 @@
 * feat: Add Android 16KB page size support for Google Play compliance by @ahmtydn in https://github.com/ahmtydn/idris_db/pull/3
 
 
-**Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.4...1.0.5
+**Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.5...1.0.5
 
-## 1.0.4
+## 1.0.5
 
 
-<!-- Release notes generated using configuration in .github/release.yml at 1.0.4 -->
+<!-- Release notes generated using configuration in .github/release.yml at 1.0.5 -->
 
 ## What's Changed
 ### Other Changes
 * fix: standardize plugin naming across all platforms for idris_db_flutter_libs by @ahmtydn in https://github.com/ahmtydn/idris_db/pull/2
 
 
-**Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.4...1.0.4
+**Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.5...1.0.5
 
 ## 1.0.2
 

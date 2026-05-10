@@ -12,11 +12,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Isar Plus - Ultra-fast Flutter Database',
-    template: '%s | Isar Plus',
+    default: 'idris DB - The Fastest NoSQL Database for Flutter',
+    template: '%s | idris DB',
   },
-  description: 'Isar Plus is an ultra-fast, easy-to-use database for Flutter and Dart applications',
+  description: 'idris DB is an enhanced, ultra-fast NoSQL database for Flutter and Dart applications - Built by IDRISIUM Corp',
   keywords: [
+    'idris db',
+    'idris db flutter',
+    'idrisium corp',
     'isar',
     'isar plus',
     'flutter database',
@@ -25,43 +28,38 @@ export const metadata: Metadata = {
     'mobile database',
     'local storage',
     'flutter storage',
-    'dart storage',
     'embedded database',
     'cross-platform database',
-    'flutter nosql',
-    'dart nosql',
-    'offline database',
-    'flutter local database',
+    'arabic database',
   ],
-  metadataBase: new URL('https://isarplus.ahmetaydin.dev'),
+  metadataBase: new URL('https://idris-db-docs.vercel.app'),
   openGraph: {
-    title: 'Isar Plus - Ultra-fast Flutter Database',
-    description: 'Isar Plus is an ultra-fast, easy-to-use database for Flutter and Dart applications',
-    url: 'https://isarplus.ahmetaydin.dev',
-    siteName: 'Isar Plus',
+    title: 'idris DB - The Fastest NoSQL Database for Flutter',
+    description: 'idris DB is an enhanced, ultra-fast NoSQL database for Flutter and Dart applications',
+    url: 'https://idris-db-docs.vercel.app',
+    siteName: 'idris DB',
     locale: 'en_US',
     type: 'website',
     images: [{
-      url: 'https://isarplus.ahmetaydin.dev/og-image.png',
+      url: 'https://raw.githubusercontent.com/idris-ghamid/idris_db/main/assets/logo.png',
       width: 1200,
       height: 630,
-      alt: 'Isar Plus - Ultra-fast Flutter Database',
+      alt: 'idris DB - The Fastest NoSQL Database for Flutter',
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Isar Plus - Ultra-fast Flutter Database',
-    description: 'Isar Plus is an ultra-fast, easy-to-use database for Flutter and Dart applications',
-    images: ['https://isarplus.ahmetaydin.dev/og-image.png'],
+    title: 'idris DB - The Fastest NoSQL Database for Flutter',
+    description: 'idris DB is an enhanced, ultra-fast NoSQL database for Flutter and Dart applications',
+    images: ['https://raw.githubusercontent.com/idris-ghamid/idris_db/main/assets/logo.png'],
   },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon-256x256.png', sizes: '256x256', type: 'image/png' },
-      { url: '/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+      { url: '/logo.png', sizes: '160x160', type: 'image/png' },
     ],
     apple: [
-      { url: '/icon-256x256.png', sizes: '256x256', type: 'image/png' },
+      { url: '/logo.png', sizes: '160x160', type: 'image/png' },
     ],
   },
 };
@@ -88,6 +86,16 @@ const { provider } = defineI18nUI(i18n, {
       nextPage: 'Sonraki Sayfa',
       chooseLanguage: 'Dil Seçin',
     },
+    ar: {
+      displayName: 'العربية',
+      toc: 'محتويات الصفحة',
+      search: 'بحث في التوثيق',
+      lastUpdate: 'آخر تحديث',
+      searchNoResult: 'لا توجد نتائج',
+      previousPage: 'الصفحة السابقة',
+      nextPage: 'الصفحة التالية',
+      chooseLanguage: 'اختر اللغة',
+    },
   },
 });
 
@@ -103,14 +111,14 @@ export default async function Layout({
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Isar Plus',
+    name: 'idris DB',
     description: 'Ultra-fast, easy-to-use database for Flutter and Dart applications',
-    url: 'https://isarplus.ahmetaydin.dev',
+    url: 'https://idris-db-docs.vercel.app',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `https://isarplus.ahmetaydin.dev/${lang}/docs?search={search_term_string}`,
+        urlTemplate: `https://idris-db-docs.vercel.app/${lang}/docs?search={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
@@ -119,11 +127,11 @@ export default async function Layout({
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Isar Plus',
-    url: 'https://isarplus.ahmetaydin.dev',
-    logo: 'https://isarplus.ahmetaydin.dev/icon-512x512.png',
+    name: 'IDRISIUM Corp',
+    url: 'https://idrisium.linkpc.net',
+    logo: 'https://raw.githubusercontent.com/idris-ghamid/idris_db/main/assets/logo.png',
     sameAs: [
-      'https://github.com/ahmtydn/idris_db',
+      'https://github.com/idris-ghamid/idris_db',
     ],
   };
 

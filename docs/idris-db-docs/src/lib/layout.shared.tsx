@@ -14,41 +14,31 @@ const BuyMeACoffeeIcon = () => (
 );
 
 const titles: Record<string, string> = {
-  en: 'Isar Plus',
-  tr: 'Isar Plus',
+  en: 'idris DB',
+  tr: 'idris DB',
+  ar: 'إدريس دي بي',
 };
 
 const pubDev: Record<string, string> = {
   en: 'Pub.dev',
   tr: 'Pub.dev',
-};
-
-const buyMeACoffee: Record<string, string> = {
-  en: 'Buy Me a Coffee',
-  tr: 'Bana Kahve Ismarla',
+  ar: 'المكتبة على Pub.dev',
 };
 
 export function baseOptions(locale: string): BaseLayoutProps {
   return {
     i18n,
     nav: {
-      title: titles[locale] || 'Isar Plus',
+      title: titles[locale] || 'idris DB',
       url: `/${locale}`,
     },
-    githubUrl: 'https://github.com/ahmtydn/idris_db',
+    githubUrl: 'https://github.com/idris-ghamid/idris_db',
     links: [
       {
         type: 'icon',
         icon: <PackageIcon />,
         text: pubDev[locale] || 'Pub.dev',
         url: 'https://pub.dev/packages/idris_db',
-        external: true,
-      },
-      {
-        type: 'icon',
-        icon: <BuyMeACoffeeIcon />,
-        text: buyMeACoffee[locale] || 'Buy Me a Coffee',
-        url: 'https://buymeacoffee.com/ahmtydn',
         external: true,
       },
     ],

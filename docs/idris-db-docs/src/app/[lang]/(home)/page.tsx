@@ -33,12 +33,16 @@ export async function generateMetadata({
   const page = source.getPage([], lang);
   if (!page) notFound();
 
-  const baseUrl = 'https://isarplus.ahmetaydin.dev';
+  const baseUrl = 'https://idris-db-docs.vercel.app';
   const pageUrl = `${baseUrl}/${lang}`;
   const enUrl = `${baseUrl}/en`;
   const trUrl = `${baseUrl}/tr`;
+  const arUrl = `${baseUrl}/ar`;
 
   const keywords = [
+    'idris db',
+    'idris db flutter',
+    'idrisium corp',
     'isar',
     'isar plus',
     'flutter database',
@@ -47,15 +51,9 @@ export async function generateMetadata({
     'mobile database',
     'local storage',
     'flutter storage',
-    'dart storage',
     'embedded database',
     'cross-platform database',
-    'flutter nosql',
-    'dart nosql',
-    'offline database',
-    'flutter local database',
-    'fast database',
-    'lightweight database',
+    'arabic database',
   ];
 
   return {
@@ -67,6 +65,7 @@ export async function generateMetadata({
       languages: {
         'en': enUrl,
         'tr': trUrl,
+        'ar': arUrl,
         'x-default': enUrl,
       },
     },
@@ -74,21 +73,21 @@ export async function generateMetadata({
       title: page.data.title,
       description: page.data.description,
       url: pageUrl,
-      siteName: 'Isar Plus',
-      locale: lang === 'tr' ? 'tr_TR' : 'en_US',
+      siteName: 'idris DB',
+      locale: lang === 'ar' ? 'ar_EG' : (lang === 'tr' ? 'tr_TR' : 'en_US'),
       type: 'website',
       images: [{
-        url: `${baseUrl}/og-image.png`,
+        url: 'https://raw.githubusercontent.com/idris-ghamid/idris_db/main/assets/logo.png',
         width: 1200,
         height: 630,
-        alt: 'Isar Plus - Ultra-fast Flutter Database',
+        alt: 'idris DB - The Fastest NoSQL Database for Flutter',
       }],
     },
     twitter: {
       card: 'summary_large_image',
       title: page.data.title,
       description: page.data.description,
-      images: [`${baseUrl}/og-image.png`],
+      images: ['https://raw.githubusercontent.com/idris-ghamid/idris_db/main/assets/logo.png'],
     },
   };
 }

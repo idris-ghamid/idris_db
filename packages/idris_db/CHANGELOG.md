@@ -1,6 +1,6 @@
-## 1.0.4
+## 1.0.5
 
-🎉 **The IDRISIUM Transformation — idris DB v1.0.4** 🎉
+🎉 **The IDRISIUM Transformation — idris DB v1.0.5** 🎉
 
 This version marks the official evolution of the library into **idris DB** under the IDRISIUM Corp umbrella.
 
@@ -440,7 +440,7 @@ This version marks the official evolution of the library into **idris DB** under
 
 ## What's Changed
 ### Other Changes
-* fix: resolve duplicate watcher events in detailed watchers (v1.0.4) by @ahmtydn in https://github.com/ahmtydn/idris_db/pull/16
+* fix: resolve duplicate watcher events in detailed watchers (v1.0.5) by @ahmtydn in https://github.com/ahmtydn/idris_db/pull/16
 
 
 **Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.11...1.0.12
@@ -473,7 +473,7 @@ This version marks the official evolution of the library into **idris DB** under
 **Full Changelog**: https://github.com/ahmtydn/idris_db/compare/1.0.8...1.0.9
 
 
-## 1.0.4
+## 1.0.5
 
 
 ### Updated
