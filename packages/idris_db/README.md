@@ -57,7 +57,7 @@ If you want to say thank you, star us on GitHub and like us on pub.dev 🙌💙
 
 The IdrisDb Inspector allows you to inspect the IdrisDb instances & collections of your app in real-time. You can execute queries, edit properties, switch between instances and sort the data.
 
-<img src="https://raw.githubusercontent.com/ahmtydn/idris_db/main/.github/assets/inspector.gif" width="100%">
+<img src="../../.github/assets/inspector.gif" width="100%">
 
 To launch the inspector, just run your IdrisDb app in debug mode and open the Inspector link in the logs.
 
@@ -66,9 +66,9 @@ To launch the inspector, just run your IdrisDb app in debug mode and open the In
 
 Benchmarks only give a rough idea of the performance of a database but as you can see, IdrisDb NoSQL database is quite fast 😇
 
-| <img src="https://raw.githubusercontent.com/ahmtydn/idris_db/main/.github/assets/benchmarks/insert.png" width="100%" /> | <img src="https://raw.githubusercontent.com/ahmtydn/idris_db/main/.github/assets/benchmarks/query.png" width="100%" /> |
+| <img src="../../.github/assets/benchmarks/insert.png" width="100%" /> | <img src="../../.github/assets/benchmarks/query.png" width="100%" /> |
 | ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| <img src="https://raw.githubusercontent.com/ahmtydn/idris_db/main/.github/assets/benchmarks/update.png" width="100%" /> | <img src="https://raw.githubusercontent.com/ahmtydn/idris_db/main/.github/assets/benchmarks/size.png" width="100%" />  |
+| <img src="../../.github/assets/benchmarks/update.png" width="100%" /> | <img src="../../.github/assets/benchmarks/size.png" width="100%" />  |
 
 If you are interested in more benchmarks or want to check how IdrisDb performs on your device you can run the [benchmarks](https://github.com/IdrisDb/IDRISDB_benchmark) yourself.
 
