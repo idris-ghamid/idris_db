@@ -89,8 +89,3 @@ coverage_report/*
 target_docker/*
 
 examples/test/
-INTEGRATION_PROGRESS.md
-PUBLISHING_GUIDE.md
-READY_TO_PUBLISH.md
-ULTIMATE_50_FEATURES.md
-IMPLEMENTATION_SPEC.md
