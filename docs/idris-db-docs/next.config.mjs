@@ -15,6 +15,7 @@ const config = {
       ...config.resolve.alias,
       source: path.resolve(__dirname, './.source'),
     };
+    config.resolve.preferRelative = true;
     return config;
   },
 };
