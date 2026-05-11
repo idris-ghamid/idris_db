@@ -77,6 +77,8 @@ local.properties
 *.json
 !docs/isar-plus-docs/tsconfig.json
 !docs/isar-plus-docs/content/**/*.json
+!docs/idris-db-docs/tsconfig.json
+!docs/idris-db-docs/components.json
 !package.json
 
 packages/hive_plus
