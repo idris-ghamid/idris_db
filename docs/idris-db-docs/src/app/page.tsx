@@ -2494,53 +2494,102 @@ final idrisDb = await IdrisDb.open(
 
   const AboutSection = (
     <section id="about" className="py-24 md:py-32 bg-muted/30">
-      <div className="max-w-4xl mx-auto px-4 md:px-6">
+      <div className="max-w-5xl mx-auto px-4 md:px-6">
         <FadeInSection>
           <SectionHeading
             badge="The Creator"
             title="Meet Idris Ghamid"
-            description="The solo developer behind Idris DB — building high-performance developer tools for the Flutter ecosystem."
+            description="The mind behind Idris DB — a solo engineer building world-class developer tools for the Flutter ecosystem."
           />
         </FadeInSection>
 
         <FadeInSection delay={0.1}>
           <Card className="border-border/50 bg-card/50 backdrop-blur-sm gradient-border-anim overflow-hidden">
-            <CardContent className="pt-0 pb-0">
-              <div className="relative">
-                {/* Cover gradient */}
-                <div className="absolute inset-0 h-32 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent" />
-                <div className="absolute inset-0 h-32 noise-overlay pointer-events-none" />
+            {/* Cover banner */}
+            <div className="relative h-36 md:h-44 bg-gradient-to-br from-primary/25 via-primary/10 to-transparent overflow-hidden">
+              <div className="absolute inset-0 hero-grid opacity-20 pointer-events-none" />
+              <div className="absolute inset-0 noise-overlay pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-card/80 to-transparent" />
+              {/* Floating logo in cover */}
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute top-4 right-4 md:top-6 md:right-6"
+              >
+                <div className="size-10 md:size-12 rounded-xl bg-background/60 backdrop-blur-sm border border-border/30 flex items-center justify-center shadow-lg">
+                  <img src="https://i.postimg.cc/YSjfXgQh/logo.png" alt="IDRISIUM" className="size-6 md:size-7 rounded" />
+                </div>
+              </motion.div>
+            </div>
 
-                {/* Founder photo + info */}
-                <div className="relative pt-16 pb-6 text-center">
+            <CardContent className="pt-0 pb-8">
+              <div className="relative px-6 md:px-8">
+                {/* Profile photo - overlapping cover */}
+                <div className="-mt-16 md:-mt-20 mb-6 flex flex-col md:flex-row md:items-end md:gap-6">
                   <motion.div
-                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileHover={{ scale: 1.04 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    className="relative size-24 md:size-28 rounded-full mx-auto mb-5 ring-4 ring-background shadow-xl overflow-hidden"
+                    className="relative size-28 md:size-36 rounded-2xl mx-auto md:mx-0 ring-4 ring-background shadow-2xl overflow-hidden shrink-0"
                   >
                     <img
                       src="https://i.postimg.cc/j2Vkg6kg/idris-ghamid.jpg"
                       alt="Idris Ghamid"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-primary/10 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
                   </motion.div>
 
-                  <h3 className="text-2xl font-bold mb-1">Idris Ghamid</h3>
-                  <p className="text-primary text-sm font-medium mb-3">Founder & Software Architect</p>
-                  <p className="text-muted-foreground text-sm max-w-lg mx-auto mb-6 leading-relaxed">
-                    A passionate software engineer obsessed with performance and developer experience.
-                    Building Idris DB to give Flutter developers the database they deserve — fast, type-safe, and beautifully crafted.
-                  </p>
+                  <div className="text-center md:text-left pt-2 md:pb-2 flex-1">
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">Idris Ghamid</h3>
+                    <p className="text-primary text-sm font-semibold mt-1">Founder & Software Architect</p>
+                    <div className="flex items-center justify-center md:justify-start gap-2 mt-2">
+                      <img src="https://i.postimg.cc/YSjfXgQh/logo.png" alt="IDRISIUM" className="size-4 rounded" />
+                      <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">IDRISIUM Corp</span>
+                    </div>
+                  </div>
+                </div>
 
-                  {/* Logo badge */}
-                  <div className="flex items-center justify-center gap-2 mb-6">
-                    <img src="https://i.postimg.cc/YSjfXgQh/logo.png" alt="IDRISIUM" className="size-5 rounded" />
-                    <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">IDRISIUM Corp</span>
+                {/* Divider */}
+                <div className="section-divider mb-6" />
+
+                {/* Bio + Info grid */}
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+                  {/* Bio */}
+                  <div className="md:col-span-3">
+                    <h4 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-3">About</h4>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      A passionate software engineer obsessed with performance and developer experience.
+                      Building Idris DB to give Flutter developers the database they deserve — fast, type-safe, and beautifully crafted.
+                      Every line of code reflects a commitment to quality that goes beyond functionality.
+                    </p>
                   </div>
 
-                  {/* Social links */}
-                  <div className="flex items-center justify-center gap-2.5 flex-wrap">
+                  {/* Quick facts */}
+                  <div className="md:col-span-2 space-y-3">
+                    <h4 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-3">Focus</h4>
+                    {[
+                      { icon: Code2, label: 'Flutter & Dart' },
+                      { icon: Database, label: 'Database Engineering' },
+                      { icon: Shield, label: 'Open Source Advocate' },
+                      { icon: Languages, label: 'Bilingual (EN/AR)' },
+                    ].map((item) => (
+                      <div key={item.label} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-muted/30 border border-border/30">
+                        <div className="size-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
+                          <item.icon className="size-3.5 text-primary" />
+                        </div>
+                        <span className="text-sm font-medium">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div className="section-divider mb-6" />
+
+                {/* Social links */}
+                <div>
+                  <h4 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-4">Connect</h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                     {[
                       { icon: Github, label: 'GitHub', href: 'https://github.com/idris-ghamid' },
                       { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/idris-ghamid' },
@@ -2553,12 +2602,12 @@ final idrisDb = await IdrisDb.open(
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.12, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="size-10 rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-colors"
+                        whileHover={{ y: -2, scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-muted/30 border border-border/30 text-muted-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-colors"
                       >
-                        <social.icon className="size-4" />
-                        <span className="sr-only">{social.label}</span>
+                        <social.icon className="size-4 shrink-0" />
+                        <span className="text-xs font-medium truncate">{social.label}</span>
                       </motion.a>
                     ))}
                   </div>
