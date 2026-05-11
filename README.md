@@ -10,7 +10,7 @@
 [![Pub Points](https://img.shields.io/pub/points/idris_db)](https://pub.dev/packages/idris_db/score)
 [![Pub Likes](https://img.shields.io/pub/likes/idris_db)](https://pub.dev/packages/idris_db)
 
-**Built with ❤️ by [IDRISIUM Corp](http://idrisium.linkpc.net) | Idris Ghamid (إدريس غامد)**
+**Built by [IDRISIUM Corp](http://idrisium.linkpc.net) | Idris Ghamid (إدريس غامد)**
 
 [Features](#-why-idris-db) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Roadmap](#-roadmap) • [Documentation](#-documentation)
 

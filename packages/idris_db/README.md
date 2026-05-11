@@ -283,7 +283,7 @@ To launch the inspector, run your app in debug mode and open the inspector link 
 
 ## 📚 Documentation
 
-📚 **Comprehensive documentation is available at [idris-db-docs.vercel.app](https://idris-db-docs.vercel.app/)**
+📚 **Comprehensive documentation is available at [idris-db.vercel.app](https://idris-db.vercel.app/)**
 
 - **Getting Started**: [Quick Start Guide](#-quick-start)
 - **Roadmap**: [50 Features Plan](https://github.com/idris-ghamid/idris_db/blob/main/ULTIMATE_50_FEATURES.md)
