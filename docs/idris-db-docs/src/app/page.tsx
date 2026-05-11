@@ -292,15 +292,9 @@ const navLinks = [
   { label: 'Features', href: '#features' },
   { label: 'Quick Start', href: '#quickstart' },
   { label: 'Playground', href: '#playground' },
-  { label: 'Use Cases', href: '#usecases' },
   { label: 'Benchmarks', href: '#benchmarks' },
   { label: 'Compare', href: '#compare' },
-  { label: 'Migration', href: '#migration' },
-  { label: 'Roadmap', href: '#roadmap' },
   { label: 'FAQ', href: '#faq' },
-  { label: 'API', href: '#api' },
-  { label: 'Tech Stack', href: '#techstack' },
-  { label: 'Showcase', href: '#showcase' },
   { label: 'About', href: '#about' },
 ]
 
@@ -1104,19 +1098,6 @@ export default function Home() {
               </AnimatePresence>
             </motion.div>
             <span className="sr-only">Toggle theme</span>
-          </motion.button>
-
-          {/* Command Palette Trigger */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setCmdOpen(true)}
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-muted-foreground border border-border/50 hover:border-primary/30 hover:text-foreground transition-colors"
-            aria-label="Open command palette"
-          >
-            <Search className="size-3" />
-            <span>Search</span>
-            <kbd className="cmd-kbd">⌘K</kbd>
           </motion.button>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
