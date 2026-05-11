@@ -2508,7 +2508,7 @@ final idrisDb = await IdrisDb.open(
   )
 
   /* ═══════════════════════════════════════════════════════════
-     SECTION 24: ABOUT IDRISIUM
+     SECTION 24: ABOUT THE CREATOR
      ═══════════════════════════════════════════════════════════ */
 
   const AboutSection = (
@@ -2516,39 +2516,72 @@ final idrisDb = await IdrisDb.open(
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         <FadeInSection>
           <SectionHeading
-            badge="About"
-            title="Built by IDRISIUM Corp"
-            description="Idris DB is developed and maintained by Idris Ghamid under IDRISIUM Corp. We build developer tools that help Flutter developers ship faster and better."
+            badge="The Creator"
+            title="Meet Idris Ghamid"
+            description="The solo developer behind Idris DB — building high-performance developer tools for the Flutter ecosystem."
           />
         </FadeInSection>
 
         <FadeInSection delay={0.1}>
-          <Card className="border-border/50 bg-card/50 backdrop-blur-sm gradient-border-anim">
-            <CardContent className="pt-8 pb-8 text-center">
-              <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <img src="/db-icon.png" alt="IDRISIUM" className="size-10 rounded-lg" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">IDRISIUM Corp</h3>
-              <p className="text-muted-foreground text-sm max-w-md mx-auto mb-6 leading-relaxed">
-                Empowering Flutter developers with high-quality, open-source tools.
-                Built with ❤️ by Idris Ghamid.
-              </p>
+          <Card className="border-border/50 bg-card/50 backdrop-blur-sm gradient-border-anim overflow-hidden">
+            <CardContent className="pt-0 pb-0">
+              <div className="relative">
+                {/* Cover gradient */}
+                <div className="absolute inset-0 h-32 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent" />
+                <div className="absolute inset-0 h-32 noise-overlay pointer-events-none" />
 
-              <div className="flex items-center justify-center gap-3">
-                {socials.map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="size-10 rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-colors"
+                {/* Founder photo + info */}
+                <div className="relative pt-16 pb-6 text-center">
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    className="relative size-24 md:size-28 rounded-full mx-auto mb-5 ring-4 ring-background shadow-xl overflow-hidden"
                   >
-                    <social.icon className="size-4" />
-                    <span className="sr-only">{social.label}</span>
-                  </motion.a>
-                ))}
+                    <img
+                      src="https://i.postimg.cc/j2Vkg6kg/idris-ghamid.jpg"
+                      alt="Idris Ghamid"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-primary/10 to-transparent" />
+                  </motion.div>
+
+                  <h3 className="text-2xl font-bold mb-1">Idris Ghamid</h3>
+                  <p className="text-primary text-sm font-medium mb-3">Founder & Software Architect</p>
+                  <p className="text-muted-foreground text-sm max-w-lg mx-auto mb-6 leading-relaxed">
+                    A passionate software engineer obsessed with performance and developer experience.
+                    Building Idris DB to give Flutter developers the database they deserve — fast, type-safe, and beautifully crafted.
+                  </p>
+
+                  {/* Logo badge */}
+                  <div className="flex items-center justify-center gap-2 mb-6">
+                    <img src="https://i.postimg.cc/YSjfXgQh/logo.png" alt="IDRISIUM" className="size-5 rounded" />
+                    <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">IDRISIUM Corp</span>
+                  </div>
+
+                  {/* Social links */}
+                  <div className="flex items-center justify-center gap-2.5 flex-wrap">
+                    {[
+                      { icon: Github, label: 'GitHub', href: 'https://github.com/idris-ghamid' },
+                      { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/idris-ghamid' },
+                      { icon: Twitter, label: 'X / Twitter', href: 'https://x.com/IdrisGhamid' },
+                      { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/idris.ghamid' },
+                      { icon: Mail, label: 'Email', href: 'mailto:idris.ghamid@gmail.com' },
+                    ].map((social) => (
+                      <motion.a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.12, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="size-10 rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-colors"
+                      >
+                        <social.icon className="size-4" />
+                        <span className="sr-only">{social.label}</span>
+                      </motion.a>
+                    ))}
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
