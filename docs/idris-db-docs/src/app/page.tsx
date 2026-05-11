@@ -68,7 +68,6 @@ import {
   ClipboardList,
   Command,
   BookOpen,
-  Send,
   Trophy,
   ArrowUp,
   X,
@@ -81,7 +80,6 @@ import {
   Download,
   Activity,
   Play,
-  HeartHandshake,
 } from 'lucide-react'
 
 /* ═══════════════════════════════════════════════════════════
@@ -768,11 +766,6 @@ const changelog = [
   },
 ]
 
-const testimonials = [
-  { name: 'Ahmed Al-Rashid', role: 'Flutter Developer', avatar: 'AR', quote: 'Migrated from Hive to Idris DB in an afternoon. The enhanced error messages alone saved me hours of debugging. The Arabic support is a game-changer for our MENA user base.', rating: 5 },
-  { name: 'Sarah Chen', role: 'Mobile Lead @ TechFlow', avatar: 'SC', quote: "The Query Analyzer is exactly what we needed. We identified 3 slow queries within minutes of installing it. Our app's data layer has never been faster.", rating: 5 },
-  { name: 'Omar Hassan', role: 'Indie App Developer', avatar: 'OH', quote: 'Zero config, type-safe, and blazing fast. Idris DB is everything I wished Hive was. The bilingual error messages are incredibly thoughtful.', rating: 5 },
-]
 
 const faqs = [
   {
@@ -817,13 +810,6 @@ const socials = [
   { icon: Mail, label: 'Email', href: 'mailto:idris.ghamid@gmail.com' },
 ]
 
-/* ─── Stats Data ─── */
-const stats = [
-  { icon: Download, value: 12000, suffix: '+', label: 'Downloads', description: 'and growing every day' },
-  { icon: Star, value: 42, suffix: '', label: 'GitHub Stars', description: 'community appreciation' },
-  { icon: Users, value: 500, suffix: '+', label: 'Developers', description: 'building with Idris DB' },
-  { icon: Activity, value: 99, suffix: '%', label: 'Uptime', description: 'reliability you can trust' },
-]
 
 /* ─── Security Features ─── */
 const securityFeatures = [
@@ -904,13 +890,6 @@ print(analysis.indexRecommendations);`,
   },
 ]
 
-/* ─── Community Data ─── */
-const communityLinks = [
-  { icon: Github, title: 'GitHub Repository', description: 'Star us, report issues, contribute code', href: 'https://github.com/idris-ghamid', stats: '42 stars', color: 'hover:border-foreground/30' },
-  { icon: MessageCircle, title: 'Discord Server', description: 'Join the community, get help, share ideas', href: 'https://discord.gg/idrisdb', stats: '500+ members', color: 'hover:border-indigo-500/30' },
-  { icon: Twitter, title: 'Follow on X', description: 'Stay updated with announcements and tips', href: 'https://x.com/IdrisGhamid', stats: '1.2K followers', color: 'hover:border-sky-500/30' },
-  { icon: BookOpen, title: 'Documentation Wiki', description: 'In-depth guides, tutorials, and examples', href: 'https://pub.dev/packages/idris_db', stats: '50+ articles', color: 'hover:border-amber-500/30' },
-]
 
 /* ─── Technology Stack Cards ─── */
 const techStack = [
@@ -922,24 +901,7 @@ const techStack = [
   { name: 'VS Code', icon: Terminal, description: 'First-class VS Code extension for Idris DB' },
 ]
 
-/* ─── Packages Showcase ─── */
-const showcasePackages = [
-  { name: 'TaskFlow Pro', category: 'Productivity', description: 'Enterprise task management with real-time sync', icon: ClipboardList, downloads: '8.2K', gradient: 'from-rose-500/10 to-pink-500/5' },
-  { name: 'ChatNow', category: 'Messaging', description: 'Encrypted messaging with offline support', icon: MessageCircle, downloads: '15.6K', gradient: 'from-sky-500/10 to-blue-500/5' },
-  { name: 'FitTrack', category: 'Health & Fitness', description: 'Health metrics with time-series data', icon: Activity, downloads: '5.1K', gradient: 'from-lime-500/10 to-green-500/5' },
-  { name: 'NoteIt', category: 'Productivity', description: 'Rich notes with full-text search', icon: BookOpen, downloads: '3.8K', gradient: 'from-violet-500/10 to-purple-500/5' },
-  { name: 'StoreFront', category: 'E-Commerce', description: 'Product catalog with fast local queries', icon: ShoppingCart, downloads: '2.9K', gradient: 'from-amber-500/10 to-orange-500/5' },
-]
 
-// Video Tutorials
-const videoTutorials = [
-  { title: 'Getting Started with Idris DB', duration: '12:34', level: 'Beginner', views: '15.2K', thumbnail: 'from-emerald-600/80 to-teal-700/80', icon: Play },
-  { title: 'Advanced Query Patterns', duration: '18:45', level: 'Advanced', views: '8.7K', thumbnail: 'from-amber-600/80 to-orange-700/80', icon: Code2 },
-  { title: 'Building Offline-First Apps', duration: '22:10', level: 'Intermediate', views: '11.3K', thumbnail: 'from-violet-600/80 to-purple-700/80', icon: WifiOff },
-  { title: 'Data Migration Guide', duration: '15:20', level: 'Intermediate', views: '6.4K', thumbnail: 'from-rose-600/80 to-pink-700/80', icon: ArrowRight },
-  { title: 'Real-time Watch Streams', duration: '14:55', level: 'Advanced', views: '9.1K', thumbnail: 'from-cyan-600/80 to-blue-700/80', icon: Radio },
-  { title: 'ACID Transactions Deep Dive', duration: '25:30', level: 'Expert', views: '4.2K', thumbnail: 'from-lime-600/80 to-green-700/80', icon: Shield },
-]
 
 // Performance metrics
 const perfMetrics = [
@@ -973,8 +935,6 @@ export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [faqSearch, setFaqSearch] = useState('')
   const [activeApiMethod, setActiveApiMethod] = useState<string | null>(null)
-  const [email, setEmail] = useState('')
-  const [subscribed, setSubscribed] = useState(false)
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [themeRotating, setThemeRotating] = useState(false)
   const [activePlayground, setActivePlayground] = useState(0)
@@ -2136,114 +2096,6 @@ export default function Home() {
   )
 
   /* ═══════════════════════════════════════════════════════════
-     SECTION 16: TESTIMONIALS
-     ═══════════════════════════════════════════════════════════ */
-
-  const TestimonialsSection = (
-    <section className="py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <FadeInSection>
-          <SectionHeading
-            badge="Community"
-            title="Loved by Developers"
-            description="Hear what developers are saying about their experience with Idris DB."
-          />
-        </FadeInSection>
-
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
-            <motion.div key={t.name} variants={staggerChild}>
-              <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
-                <Card className="testimonial-card card-inner-glow h-full border-border/50 bg-card/50 backdrop-blur-sm gradient-border-anim">
-                  <CardContent className="pt-6">
-                    <div className="flex gap-0.5 mb-4">
-                      {Array.from({ length: t.rating }).map((_, i) => (
-                        <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
-                      ))}
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-6 italic">&ldquo;{t.quote}&rdquo;</p>
-                    <div className="flex items-center gap-3 mt-auto">
-                      <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
-                        {t.avatar}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium">{t.name}</p>
-                        <p className="text-xs text-muted-foreground">{t.role}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </motion.div>
-          ))}
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-
-  /* ═══════════════════════════════════════════════════════════
-     SECTION 17: NEWSLETTER
-     ═══════════════════════════════════════════════════════════ */
-
-  const NewsletterSection = (
-    <section className="py-20 md:py-24 bg-muted/30">
-      <div className="max-w-2xl mx-auto px-4 md:px-6">
-        <FadeInSection>
-          <div className="relative rounded-2xl border border-primary/20 bg-primary/5 p-8 md:p-12 text-center overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
-            <div className="absolute inset-0 noise-overlay pointer-events-none" />
-            <div className="relative z-10">
-              <motion.div
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <Mail className="size-10 text-primary mx-auto mb-4" />
-              </motion.div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3">Stay in the Loop</h2>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto text-sm">
-                Get notified about new releases, features, and developer tips. No spam, unsubscribe anytime.
-              </p>
-              {!subscribed ? (
-                <div className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
-                  <input
-                    type="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="newsletter-input flex-1 w-full px-4 py-3 rounded-xl border border-border/50 text-sm placeholder:text-muted-foreground/60 focus:outline-none"
-                  />
-                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                    <Button className="h-11 px-6 w-full sm:w-auto" onClick={() => { if (email) setSubscribed(true) }}>
-                      <Send className="size-4 mr-2" /> Subscribe
-                    </Button>
-                  </motion.div>
-                </div>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center justify-center gap-2 text-primary font-medium"
-                >
-                  <motion.div
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Check className="size-6" />
-                  </motion.div>
-                  <span>Thanks for subscribing! Check your inbox.</span>
-                </motion.div>
-              )}
-              <p className="text-[10px] text-muted-foreground/60 mt-4">
-                Join 500+ Flutter developers getting Idris DB updates.
-              </p>
-            </div>
-          </div>
-        </FadeInSection>
-      </div>
-    </section>
-  )
-
-  /* ═══════════════════════════════════════════════════════════
      SECTION 18: FAQ
      ═══════════════════════════════════════════════════════════ */
 
@@ -2298,42 +2150,6 @@ export default function Home() {
             </motion.p>
           )}
         </FadeInSection>
-      </div>
-    </section>
-  )
-
-  /* ═══════════════════════════════════════════════════════════
-     SECTION 19: STATS DASHBOARD
-     ═══════════════════════════════════════════════════════════ */
-
-  const StatsSection = (
-    <section className="py-20 md:py-24 section-bg-warm">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <FadeInSection>
-          <SectionHeading
-            badge="By The Numbers"
-            title="Trusted by Developers Worldwide"
-            description="Idris DB is growing fast. Here are the numbers that matter."
-          />
-        </FadeInSection>
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {stats.map((stat) => (
-            <motion.div key={stat.label} variants={staggerChild}>
-              <Card className="stats-card h-full border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardContent className="pt-6 pb-6 text-center">
-                  <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <stat.icon className="size-5 text-primary" />
-                  </div>
-                  <div className="text-3xl font-bold mb-1 counter-glow counter-text-anim">
-                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <p className="text-sm font-semibold text-foreground mb-1">{stat.label}</p>
-                  <p className="text-xs text-muted-foreground">{stat.description}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </StaggerContainer>
       </div>
     </section>
   )
@@ -2567,61 +2383,6 @@ final idrisDb = await IdrisDb.open(
   )
 
   /* ═══════════════════════════════════════════════════════════
-     SECTION 22: COMMUNITY
-     ═══════════════════════════════════════════════════════════ */
-
-  const CommunitySection = (
-    <section id="community" className="py-24 md:py-32 bg-muted/30 aurora-bg">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <FadeInSection>
-          <SectionHeading
-            badge="Community"
-            title="Join the Idris DB Community"
-            description="Connect with hundreds of Flutter developers using Idris DB. Get help, share ideas, and contribute to the project."
-          />
-        </FadeInSection>
-
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {communityLinks.map((link) => (
-            <motion.div key={link.title} variants={staggerChild}>
-              <motion.a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -4 }}
-                className={`community-card block h-full rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 text-center ${link.color} transition-all duration-300`}
-              >
-                <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 icon-glow-ring">
-                  <link.icon className="size-6 text-primary" />
-                </div>
-                <h3 className="font-semibold text-sm mb-1">{link.title}</h3>
-                <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{link.description}</p>
-                <Badge variant="secondary" className="text-[10px] font-medium">
-                  {link.stats}
-                </Badge>
-              </motion.a>
-            </motion.div>
-          ))}
-        </StaggerContainer>
-
-        {/* Open Source Badge */}
-        <FadeInSection delay={0.2}>
-          <div className="mt-12 text-center">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-border/50 bg-card/50 backdrop-blur-sm"
-            >
-              <HeartHandshake className="size-5 text-primary" />
-              <span className="text-sm font-medium">Open Source &amp; Free Forever</span>
-              <span className="text-xs text-muted-foreground">— Apache 2.0 License</span>
-            </motion.div>
-          </div>
-        </FadeInSection>
-      </div>
-    </section>
-  )
-
-  /* ═══════════════════════════════════════════════════════════
      SECTION: PERFORMANCE METRICS
      ═══════════════════════════════════════════════════════════ */
 
@@ -2665,63 +2426,6 @@ final idrisDb = await IdrisDb.open(
   )
 
   /* ═══════════════════════════════════════════════════════════
-     SECTION: VIDEO TUTORIALS
-     ═══════════════════════════════════════════════════════════ */
-
-  const VideoTutorialsSection = (
-    <section id="videos" className="py-20 md:py-24">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <FadeInSection>
-          <SectionHeading
-            badge="Learn"
-            title="Video Tutorials"
-            description="Watch step-by-step guides to master Idris DB from setup to production."
-          />
-        </FadeInSection>
-
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {videoTutorials.map((video) => (
-            <motion.div key={video.title} variants={staggerChild}>
-              <Card className="video-card h-full border-border/40 bg-card/30 overflow-hidden group">
-                <div className={`relative h-40 bg-gradient-to-br ${video.thumbnail} flex items-center justify-center`}>
-                  <div className="video-play-btn">
-                    <div className="video-play-btn-inner">
-                      <Play className="size-5 text-gray-800 ml-0.5" fill="currentColor" />
-                    </div>
-                  </div>
-                  <div className="absolute bottom-3 right-3 z-10">
-                    <Badge variant="secondary" className="text-[10px] font-medium bg-black/30 text-white border-0 backdrop-blur-sm">
-                      {video.duration}
-                    </Badge>
-                  </div>
-                  <div className="absolute top-3 left-3 z-10">
-                    <Badge className={`text-[9px] font-medium border-0 ${video.level === 'Beginner' ? 'bg-green-500/20 text-green-300' : video.level === 'Intermediate' ? 'bg-amber-500/20 text-amber-300' : video.level === 'Advanced' ? 'bg-orange-500/20 text-orange-300' : 'bg-red-500/20 text-red-300'}`}>
-                      {video.level}
-                    </Badge>
-                  </div>
-                </div>
-                <CardContent className="pt-4 pb-4">
-                  <h3 className="font-semibold text-sm mb-2 line-clamp-2">{video.title}</h3>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Eye className="size-3" />
-                      <span>{video.views} views</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Clock className="size-3" />
-                      <span>{video.duration}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-
-  /* ═══════════════════════════════════════════════════════════
      SECTION: TECHNOLOGY STACK
      ═══════════════════════════════════════════════════════════ */
 
@@ -2747,52 +2451,6 @@ final idrisDb = await IdrisDb.open(
                     </div>
                     <h3 className="font-semibold text-sm">{tech.name}</h3>
                     <p className="text-[11px] text-muted-foreground leading-relaxed">{tech.description}</p>
-                  </CardContent>
-                </Card>
-              </TiltCard>
-            </motion.div>
-          ))}
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-
-  /* ═══════════════════════════════════════════════════════════
-     SECTION: SHOWCASE
-     ═══════════════════════════════════════════════════════════ */
-
-  const ShowcaseSection = (
-    <section id="showcase" className="py-24 md:py-32 bg-muted/20 stripe-pattern">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <FadeInSection>
-          <SectionHeading
-            badge="Showcase"
-            title="Trusted by Developers"
-            description="See how real apps are building with Idris DB in production."
-          />
-        </FadeInSection>
-
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {showcasePackages.map((pkg) => (
-            <motion.div key={pkg.name} variants={staggerChild}>
-              <TiltCard>
-                <Card className={`h-full border-border/40 bg-card/30 backdrop-blur-sm overflow-hidden card-inner-glow`}>
-                  <CardContent className="pt-5 pb-5">
-                    <div className={`h-2 w-full bg-gradient-to-r ${pkg.gradient} rounded-t-xl -mt-5 mb-4`} />
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                      <div className="size-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 icon-glow-ring">
-                        <pkg.icon className="size-5 text-primary" />
-                      </div>
-                      <Badge variant="outline" className="text-[9px] font-medium float-tag border-border/50 text-muted-foreground">
-                        {pkg.category}
-                      </Badge>
-                    </div>
-                    <h3 className="font-semibold text-base mb-1">{pkg.name}</h3>
-                    <p className="text-muted-foreground text-xs leading-relaxed mb-3">{pkg.description}</p>
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Download className="size-3" />
-                      <span>{pkg.downloads} downloads</span>
-                    </div>
                   </CardContent>
                 </Card>
               </TiltCard>
@@ -3117,20 +2775,14 @@ final idrisDb = await IdrisDb.open(
       {APIExplorerSection}
       {RoadmapSection}
       {ChangelogSection}
-      {TestimonialsSection}
-      {StatsSection}
       {SecuritySection}
       <div className="section-sep"><div className="sep-dot" /></div>
       {PlaygroundSection}
-      {CommunitySection}
       <div className="section-sep"><div className="sep-dot" /></div>
       {PerformanceSection}
-      {VideoTutorialsSection}
       <div className="section-sep"><div className="sep-dot" /></div>
       {TechStackSection}
-      {ShowcaseSection}
       <div className="section-sep"><div className="sep-dot" /></div>
-      {NewsletterSection}
       {FAQSection}
       <div className="section-sep"><div className="sep-dot" /></div>
       {CTASection}
